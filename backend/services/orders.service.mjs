@@ -21,6 +21,7 @@ export const createOrder = (order) => {
 
     // TABEL ORDERS
     const query = `INSERT INTO orders (id, idUser, metodePengiriman, metodePembayaran, idCard, promoCode, subTotal, statusOrder) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+
     let params = [
       id,
       idUser,
@@ -31,6 +32,34 @@ export const createOrder = (order) => {
       subTotal,
       status,
     ];
+
+    if (metodePembayaran === "card") {
+      const { firstname, lastname, cardNumber, cvv, month, year } = order.card;
+      const id = uuidv4();
+
+      const cekCard = `SELECT * FROM cardDetails WHERE cardNumber = ?`;
+      sql
+        .execute(cekCard, [idCard])
+        .then((result) => {
+          if (result[0].length === 0) {
+            const queryCard = `INSERT INTO cardDetails (id, firstname, lastname, cardNumber, cvv, month, year) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+            const paramsCard = [
+              id,
+              firstname,
+              lastname,
+              cardNumber,
+              cvv,
+              month,
+              year,
+            ];
+            sql
+              .execute(queryCard, [...paramsCard])
+              .then((result) => console.log(result))
+              .catch((err) => console.log(err));
+          }
+        })
+        .catch((err) => console.log(err));
+    }
 
     sql
       .execute(query, [...params])
@@ -80,6 +109,7 @@ export const createOrder = (order) => {
   });
 };
 
+// BELUM FINISH
 export const getOrderByUserId = (userId) => {
   return new Promise((resolve, reject) => {
     const query = `
