@@ -1,37 +1,27 @@
 "use strict";
 /** @type {import('sequelize-cli').Migration} */
-
 const { v4: uuidv4 } = require("uuid");
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Orders", {
+    await queryInterface.createTable("orderDetails", {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.STRING,
         defaultValue: () => uuidv4(),
       },
-      idUser: {
+      idOrder: {
         type: Sequelize.STRING,
       },
-      metodePengiriman: {
+      idBarang: {
         type: Sequelize.STRING,
       },
-      metodePembayaran: {
-        type: Sequelize.STRING,
+      kuantitas: {
+        type: Sequelize.INTEGER,
       },
-      idCard: {
-        type: Sequelize.STRING,
-      },
-      promoCode: {
-        type: Sequelize.STRING,
-      },
-      subtotal: {
+      totalHarga: {
         type: Sequelize.DECIMAL,
-      },
-      statusOrder: {
-        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -46,6 +36,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Orders");
+    await queryInterface.dropTable("orderDetails");
   },
 };

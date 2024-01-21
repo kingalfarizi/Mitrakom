@@ -13,51 +13,69 @@ export const createOrder = (order) => {
       promoCode,
       status = "pending",
     } = order;
-    const query =
-      "INSERT INTO orders (id, idUser, idBarang, kuantitas, metodePengiriman, metodePembayaran, idCard, promoCode, subTotal, statusOrder) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    let params;
 
     let subTotal = barang.reduce((total, item) => {
       return total + item.quantity * item.ItemPrice;
     }, 0);
-
     subTotal *= 1000;
 
-    if (barang.length > 1) {
-      // Jika panjang idBarang lebih dari 1, gunakan map atau forEach untuk membuat params
-      params = barang.map((item) => [
-        id,
-        idUser,
-        item.id,
-        item.quantity,
-        metodePengiriman,
-        metodePembayaran,
-        idCard || null,
-        promoCode || null,
-        subTotal,
-        status,
-      ]);
-    } else {
-      // Jika panjang idBarang hanya 1, buat params seperti biasa
-      params = [
-        id,
-        idUser,
-        barang[0].id, // Mengambil idBarang pertama jika panjangnya hanya 1
-        barang[0].quantity,
-        metodePengiriman,
-        metodePembayaran,
-        idCard || null,
-        promoCode || null,
-        subTotal,
-        status,
-      ];
-    }
-
-    // return resolve(params);
+    // TABEL ORDERS
+    const query = `INSERT INTO orders (id, idUser, metodePengiriman, metodePembayaran, idCard, promoCode, subTotal, statusOrder) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+    let params = [
+      id,
+      idUser,
+      metodePengiriman,
+      metodePembayaran,
+      idCard || null,
+      promoCode || null,
+      subTotal,
+      status,
+    ];
 
     sql
       .execute(query, [...params])
       .then((result) => resolve(result))
       .catch((err) => reject(err));
+
+    // TABEL ORDERDETAILS
+
+    // binding sesuai jumlah barang (item)
+    const placeHoldOrderDetail = Array.from(
+      { length: barang.length },
+      () => "(?, ?, ?, ?, ?)"
+    ).join(", ");
+
+    let params2;
+
+    const query2 = `INSERT INTO orderDetails (id, idOrder, idBarang, kuantitas, totalHarga) VALUES ${placeHoldOrderDetail}`;
+
+    if (barang.length > 1) {
+      // Jika panjang idBarang lebih dari 1, gunakan map atau forEach untuk membuat params
+      params2 = barang.map((item) => [
+        uuidv4(),
+        id,
+        item.id,
+        item.quantity,
+        item.quantity * item.ItemPrice * 1000,
+      ]);
+    } else {
+      // Jika panjang idBarang hanya 1, buat params seperti biasa
+      params2 = [
+        uuidv4(),
+        id,
+        barang[0].id, // Mengambil idBarang pertama jika panjangnya hanya 1
+        barang[0].quantity,
+        barang[0].quantity * barang[0].ItemPrice * 1000,
+      ];
+    }
+
+    const flattenedValues = params2.flat();
+
+    sql
+      .execute(query2, [...flattenedValues])
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err));
+
+    // return resolve(flattenedValues);
   });
 };
