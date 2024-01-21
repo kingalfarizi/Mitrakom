@@ -33,7 +33,7 @@ const CheckoutForm = ({
   const mappedCart = cart.map((item) => ({
     id: item.id,
     quantity: item.quantity,
-    itemPrice: item.ItemPrice,
+    ItemPrice: item.ItemPrice,
   }));
 
   const handleSubmit = (e) => {

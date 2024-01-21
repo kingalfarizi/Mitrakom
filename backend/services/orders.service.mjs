@@ -114,9 +114,10 @@ export const getOrderByUserId = (userId) => {
   return new Promise((resolve, reject) => {
     const query = `
       SELECT orders.id, orders.metodePengiriman, orders.metodePembayaran, orders.idCard, orders.promoCode, orders.subTotal, orders.statusOrder,
-      orderDetails.idBarang, orderDetails.kuantitas, orderDetails.totalHarga
+      orderDetails.idBarang, orderDetails.kuantitas, barangs.ItemName, barangs.ItemImg, orderDetails.totalHarga
       FROM orders
       JOIN orderDetails ON orders.id = orderDetails.idOrder
+      JOIN barangs ON orderDetails.idBarang = barangs.id
       WHERE orders.idUser = ?
     `;
 
