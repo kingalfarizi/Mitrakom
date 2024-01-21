@@ -20,32 +20,29 @@ export const getUser = (id) => {
 
 export const createUser = (user) => {
     return new Promise((resolve, reject) => {
-        const { id, email, password, fullname, address, number
-        } = user;
+        const { id, email, password, fullname, address, number } = user;
         let query;
         let params;
 
-        if (address === undefined) {
-            query = 'INSERT INTO users (id, email, password, fullname, number) VALUES(?, ?, ?, ?, ?)';
-            params = [id, email, password, fullname, number];
-        }
-        if (number === undefined) {
-            query = 'INSERT INTO users (id, email, password, fullname, address) VALUES(?, ?, ?, ?, ?)';
-            params = [id, email, password, fullname, address];
-        }
         if (address === undefined && number === undefined) {
-            query = 'INSERT INTO users (id, email, password, fullname) VALUES(?, ?, ?, ?)';
-            params = [id, email, password, fullname,];
-        }
-        else {
-            query = 'INSERT INTO users (id, email, password, fullname, address) VALUES(?, ?, ?, ?, ?)';
+            query = 'INSERT INTO users (id, email, password, fullname) VALUES (?, ?, ?, ?)';
+            params = [id, email, password, fullname];
+        } else if (address === undefined) {
+            query = 'INSERT INTO users (id, email, password, fullname, number) VALUES (?, ?, ?, ?, ?)';
+            params = [id, email, password, fullname, number];
+        } else if (number === undefined) {
+            query = 'INSERT INTO users (id, email, password, fullname, address) VALUES (?, ?, ?, ?, ?)';
             params = [id, email, password, fullname, address];
+        } else {
+            query = 'INSERT INTO users (id, email, password, fullname, address, number) VALUES (?, ?, ?, ?, ?, ?)';
+            params = [id, email, password, fullname, address, number];
         }
+
         sql.execute(query, [...params])
             .then((result) => resolve(result))
-            .catch((err) => reject(err))
-    })
-}
+            .catch((err) => reject(err));
+    });
+};
 
 
 export const updateUser = (id, user) => {

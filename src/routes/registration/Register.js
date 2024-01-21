@@ -23,7 +23,8 @@ const Register = ({ activateLoginModal }) => {
 
   const createUser = async (user) => {
     const users = await getUsers();
-    //check repetitive emails
+    // console.log(users)
+    // check repetitive emails
     const repetitiveEmail = users.filter((u) => u.email === user.email);
     //cretae unique id
     const id = uuidv4();
@@ -40,6 +41,7 @@ const Register = ({ activateLoginModal }) => {
             "Content-type": "application/json"
           }
         });
+        console.log(response)
         if (response.status === 200) {
           return true;
         }
@@ -77,6 +79,7 @@ const Register = ({ activateLoginModal }) => {
       }
       currForm.email = currForm.email.toLowerCase();
       const accCreation = await createUser(currForm);
+      // console.log(accCreation)
       if (accCreation === false) {
         setLoading(false);
         setSubmit(false);
