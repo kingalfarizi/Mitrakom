@@ -1,11 +1,13 @@
 import { Router } from "express";
-import { createOrder } from "../controllers/orders.controller.mjs";
+import { createOrder, getOrderByUserId } from "../controllers/orders.controller.mjs";
 
 const ordersRouter = Router();
 
 ordersRouter.get('/', () => {});
 
 ordersRouter.post('/', createOrder);
+
+ordersRouter.get('/user/:id', getOrderByUserId)
 
 ordersRouter.put('/:id', () => {});
 

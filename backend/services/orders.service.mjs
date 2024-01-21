@@ -79,3 +79,25 @@ export const createOrder = (order) => {
     // return resolve(flattenedValues);
   });
 };
+
+export const getOrderByUserId = (userId) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT orders.id, orders.metodePengiriman, orders.metodePembayaran, orders.idCard, orders.promoCode, orders.subTotal, orders.statusOrder,
+      orderDetails.idBarang, orderDetails.kuantitas, orderDetails.totalHarga
+      FROM orders
+      JOIN orderDetails ON orders.id = orderDetails.idOrder
+      WHERE orders.idUser = ?
+    `;
+
+    sql
+      .execute(query, [userId])
+      .then((result) => {
+        resolve(result[0]); // Assuming result is an array of orders
+      })
+      .catch((error) => {
+        console.error("Error fetching orders by user ID:", error);
+        reject(error);
+      });
+  });
+};
