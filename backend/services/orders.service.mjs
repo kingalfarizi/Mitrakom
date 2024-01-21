@@ -1,31 +1,39 @@
 import sql from "../config/sql.mjs";
+import { v4 as uuidv4 } from "uuid";
 
 export const createOrder = (order) => {
   return new Promise((resolve, reject) => {
     const {
-      id,
-      idBarang,
-      kuantitas,
+      id = uuidv4(),
+      idUser,
+      barang,
       metodePengiriman,
       metodePembayaran,
       idCard,
       promoCode,
-      subTotal,
       status = "pending",
     } = order;
     const query =
-      "INSERT INTO orders (id, idBarang, kuantitas, metodePengiriman, metodePembayaran, idCard, promoCode, subTotal, status) VALUES (?, ?, ?, ?, ?, ?)";
+      "INSERT INTO orders (id, idUser, idBarang, kuantitas, metodePengiriman, metodePembayaran, idCard, promoCode, subTotal, statusOrder) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     let params;
-    if (idBarang.length > 1) {
+
+    let subTotal = barang.reduce((total, item) => {
+      return total + item.quantity * item.ItemPrice;
+    }, 0);
+
+    subTotal *= 1000;
+
+    if (barang.length > 1) {
       // Jika panjang idBarang lebih dari 1, gunakan map atau forEach untuk membuat params
-      params = idBarang.map((barangId) => [
+      params = barang.map((item) => [
         id,
-        barangId,
-        kuantitas,
+        idUser,
+        item.id,
+        item.quantity,
         metodePengiriman,
         metodePembayaran,
-        idCard,
-        promoCode,
+        idCard || null,
+        promoCode || null,
         subTotal,
         status,
       ]);
@@ -33,16 +41,19 @@ export const createOrder = (order) => {
       // Jika panjang idBarang hanya 1, buat params seperti biasa
       params = [
         id,
-        idBarang[0], // Mengambil idBarang pertama jika panjangnya hanya 1
-        kuantitas,
+        idUser,
+        barang[0].id, // Mengambil idBarang pertama jika panjangnya hanya 1
+        barang[0].quantity,
         metodePengiriman,
         metodePembayaran,
-        idCard,
-        promoCode,
+        idCard || null,
+        promoCode || null,
         subTotal,
         status,
       ];
     }
+
+    // return resolve(params);
 
     sql
       .execute(query, [...params])

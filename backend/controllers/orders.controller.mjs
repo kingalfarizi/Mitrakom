@@ -4,13 +4,15 @@ export const createOrder = (req, res) => {
   const order = req.body;
   orderServices
     .createOrder(order)
-    .then(() => {
+    .then((data) => {
       res.status(200).json({
         message: "Order created",
-        data: order,
+        data: data,
       });
     })
     .catch((err) => {
-      res.status(500).send(err);
+      res.status(500).json({
+        message: err.message,
+      });
     });
 };

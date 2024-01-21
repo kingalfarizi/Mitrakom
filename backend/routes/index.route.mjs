@@ -1,6 +1,7 @@
 import { Router } from "express";
 import usersRouter from "./users.route.mjs";
 import captchaRouter from "./captcha.route.mjs";
+import ordersRouter from "./orders.route.mjs";
 
 const indexRouter = Router();
 
@@ -8,7 +9,7 @@ indexRouter.get('/', (req, res) => {
     res.send('Server Deployed 🥳');
 })
 indexRouter.use('/users', usersRouter);
-indexRouter.use('/orders', )
+indexRouter.use('/orders', ordersRouter)
 
 indexRouter.use('/verify-recaptcha', captchaRouter);
 
