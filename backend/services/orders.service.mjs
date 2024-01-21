@@ -63,7 +63,7 @@ export const createOrder = (order) => {
 
     sql
       .execute(query, [...params])
-      .then((result) => resolve(result))
+      .then((result) => resolve({ id }))
       .catch((err) => reject(err));
 
     // TABEL ORDERDETAILS

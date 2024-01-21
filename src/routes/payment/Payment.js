@@ -13,7 +13,7 @@ const Payment = ({ cartItems, totalPayment }) => {
   const [transactionId, setTransactionId] = useState(0);
   const validate = validateForm("payment");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError(validate(formValue));
     setSubmit(true);
