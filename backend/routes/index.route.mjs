@@ -8,6 +8,7 @@ indexRouter.get('/', (req, res) => {
     res.send('Server Deployed 🥳');
 })
 indexRouter.use('/users', usersRouter);
+indexRouter.use('/orders', )
 
 indexRouter.use('/verify-recaptcha', captchaRouter);
 
