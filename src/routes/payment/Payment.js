@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import Tick from "../../assets/images/success-tick.png";
 import ResetLocation from "../../helpers/ResetLocation";
 // import { v4 as uuidv4 } from "uuid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import validateForm from "../../components/validateForm";
+import useSnap from "./useSnap.js";
 const Payment = ({ cartItems, totalPayment }) => {
   const [formValue, setFormValue] = useState({
     firstname: "",
@@ -14,6 +15,7 @@ const Payment = ({ cartItems, totalPayment }) => {
     month: "",
     year: "",
   });
+
   const [dataPost, setDataPost] = useState({});
   const [submit, setSubmit] = useState(false);
   const [formError, setFormError] = useState({});
@@ -36,6 +38,12 @@ const Payment = ({ cartItems, totalPayment }) => {
     ResetLocation();
   };
 
+  const { snapEmbed } = useSnap();
+
+  const [snapShow, setSnapShow] = useState(false);
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (submit && Object.keys(formError).length === 0) {
       fetch("http://localhost:3000/orders", {
@@ -45,16 +53,33 @@ const Payment = ({ cartItems, totalPayment }) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data)
+          console.log(data);
           setTransactionId(data.data.id);
+          setSnapShow(true);
+          snapEmbed(data.data.token, "snap-container", {
+            onSuccess: function (result) {
+              console.log("success", result);
+              navigate("/payment");
+              setSnapShow(false);
+            },
+            onPending: function (result) {
+              console.log("pending", result);
+              navigate("/payment");
+              setSnapShow(false);
+            },
+            onClose: function () {
+              navigate("/payment");
+              setSnapShow(false);
+            },
+          });
 
           sessionStorage.removeItem("cartItems");
           sessionStorage.removeItem("orderItems");
           sessionStorage.removeItem("cartQuantity");
 
-          setTimeout(() => {
-            window.location.href = `/payment`;
-          }, 1500);
+          // setTimeout(() => {
+          //   window.location.href = `/payment`;
+          // }, 1500);
         })
         .catch((err) => console.log(err));
 
@@ -72,6 +97,7 @@ const Payment = ({ cartItems, totalPayment }) => {
   useEffect(() => {
     document.title = "Payment | Pizza Time";
   }, []);
+
   return (
     <React.Fragment>
       {cartItems.length === 0 ? (
@@ -80,6 +106,18 @@ const Payment = ({ cartItems, totalPayment }) => {
         <main>
           {submit && Object.keys(formError).length === 0 ? (
             <article className="success-payment">
+              <div
+                id="snap-container"
+                style={{
+                  position: "fixed",
+                  top: 0,
+                  left: 0,
+                  zIndex: 999999,
+                  width: "100%",
+                  height: "100%",
+                }}
+              ></div>
+
               <section className="success-payment-title">
                 <h2>Your food is on the way!</h2>
                 <p>

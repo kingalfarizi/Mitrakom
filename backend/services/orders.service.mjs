@@ -1,5 +1,6 @@
 import sql from "../config/sql.mjs";
 import { v4 as uuidv4 } from "uuid";
+import midtransClient from "midtrans-client";
 
 export const createOrder = (order) => {
   return new Promise((resolve, reject) => {
@@ -63,7 +64,11 @@ export const createOrder = (order) => {
 
     sql
       .execute(query, [...params])
-      .then((result) => resolve({ id }))
+      .then((result) => {
+        midtransTransaction().then((result) => {
+          resolve({ id, ...result });
+        });
+      })
       .catch((err) => reject(err));
 
     // TABEL ORDERDETAILS
@@ -107,6 +112,28 @@ export const createOrder = (order) => {
 
     // return resolve(flattenedValues);
   });
+};
+
+const midtransTransaction = async (transactionData) => {
+  let snap = new midtransClient.Snap({
+    isProduction: false,
+    serverKey: process.env.MIDTRANS_SERVER_KEY,
+    clientKey: process.env.MIDTRANS_CLIENT_KEY,
+  });
+
+  let parameter = {
+    transaction_details: {
+      order_id: "TRX-" + Math.round(new Date().getTime() / 1000),
+      gross_amount: 200000,
+    },
+  };
+
+  try {
+    let hasil = await snap.createTransaction(parameter);
+    return hasil;
+  } catch (error) {
+    return error.message;
+  }
 };
 
 // BELUM FINISH
