@@ -7,7 +7,9 @@ export const createOrder = (order) => {
     const {
       id = uuidv4(),
       idUser,
+      userDetail,
       barang,
+      cartDetail,
       metodePengiriman,
       metodePembayaran,
       idCard,
@@ -65,7 +67,13 @@ export const createOrder = (order) => {
     sql
       .execute(query, [...params])
       .then((result) => {
-        midtransTransaction().then((result) => {
+        midtransTransaction({
+          id,
+          subTotal,
+          barang,
+          userDetail,
+          cartDetail,
+        }).then((result) => {
           resolve({ id, ...result });
         });
       })
@@ -123,8 +131,25 @@ const midtransTransaction = async (transactionData) => {
 
   let parameter = {
     transaction_details: {
-      order_id: "TRX-" + Math.round(new Date().getTime() / 1000),
-      gross_amount: 200000,
+      order_id: "TRX-" + transactionData.id,
+      gross_amount: transactionData.subTotal,
+    },
+    item_details: transactionData.cartDetail.map((item) => ({
+      id: item.id,
+      price: parseInt(item.ItemPrice) * 1000,
+      quantity: item.quantity,
+      name: item.ItemName,
+    })),
+    customer_details: {
+      first_name: transactionData.userDetail.fullname,
+      email: transactionData.userDetail.email,
+      phone: transactionData.userDetail.number || 0,
+      shipping_address: {
+        first_name: transactionData.userDetail.fullname,
+        email: transactionData.userDetail.email,
+        phone: transactionData.userDetail.number || 0,
+        address: transactionData.userDetail.address || "",
+      },
     },
   };
 
