@@ -24,13 +24,13 @@ export const createUser = (user) => {
         let query;
         let params;
 
-        if (address === undefined && number === undefined) {
+        if (address === "" && number === "") {
             query = 'INSERT INTO users (id, email, password, fullname) VALUES (?, ?, ?, ?)';
             params = [id, email, password, fullname];
-        } else if (address === undefined) {
+        } else if (address === "") {
             query = 'INSERT INTO users (id, email, password, fullname, number) VALUES (?, ?, ?, ?, ?)';
             params = [id, email, password, fullname, number];
-        } else if (number === undefined) {
+        } else if (number === "") {
             query = 'INSERT INTO users (id, email, password, fullname, address) VALUES (?, ?, ?, ?, ?)';
             params = [id, email, password, fullname, address];
         } else {

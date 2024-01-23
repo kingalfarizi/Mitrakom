@@ -71,14 +71,16 @@ const Register = ({ activateLoginModal }) => {
       if (currForm.repeatPassword.length > 0) {
         delete currForm.repeatPassword;
       }
-      if (currForm.address !== undefined) {
-        delete currForm.address;
-      }
-      if (currForm.number !== undefined) {
-        delete currForm.number;
-      }
+      // if (currForm.address !== undefined) {
+      //   delete currForm.address;
+      // }
+      // if (currForm.number !== undefined) {
+      //   delete currForm.number;
+      // }
       currForm.email = currForm.email.toLowerCase();
       const accCreation = await createUser(currForm);
+      // console.log(currForm)
+      // const accCreation = false;
       // console.log(accCreation)
       if (accCreation === false) {
         setLoading(false);
