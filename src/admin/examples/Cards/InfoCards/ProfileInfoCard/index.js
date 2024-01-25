@@ -26,12 +26,12 @@ import Tooltip from "@mui/material/Tooltip";
 import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import MDBox from "admin/components/MDBox";
+import MDTypography from "admin/components/MDTypography";
 
 // Material Dashboard 2 React base styles
-import colors from "assets/theme/base/colors";
-import typography from "assets/theme/base/typography";
+import colors from "admin/assets/theme/base/colors";
+import typography from "admin/assets/theme/base/typography";
 
 function ProfileInfoCard({ title, description, info, social, action, shadow }) {
   const labels = [];

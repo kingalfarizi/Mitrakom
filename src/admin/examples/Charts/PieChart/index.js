@@ -27,11 +27,11 @@ import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import MDBox from "admin/components/MDBox";
+import MDTypography from "admin/components/MDTypography";
 
 // PieChart configurations
-import configs from "examples/Charts/PieChart/configs";
+import configs from "admin/examples/Charts/PieChart/configs";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

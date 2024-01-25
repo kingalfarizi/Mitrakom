@@ -28,16 +28,16 @@ import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+import MDBox from "admin/components/MDBox";
+import MDTypography from "admin/components/MDTypography";
+import MDButton from "admin/components/MDButton";
 
 // Material Dashboard 2 React example components
-import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
+import SidenavCollapse from "admin/examples/Sidenav/SidenavCollapse";
 
 // Custom styles for the Sidenav
-import SidenavRoot from "examples/Sidenav/SidenavRoot";
-import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
+import SidenavRoot from "admin/examples/Sidenav/SidenavRoot";
+import sidenavLogoLabel from "admin/examples/Sidenav/styles/sidenav";
 
 // Material Dashboard 2 React context
 import {
@@ -45,7 +45,7 @@ import {
   setMiniSidenav,
   setTransparentSidenav,
   setWhiteSidenav,
-} from "context";
+} from "admin/context";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useMaterialUIController();

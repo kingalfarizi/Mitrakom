@@ -18,18 +18,18 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import MDBox from "admin/components/MDBox";
+import MDTypography from "admin/components/MDTypography";
 
 // Material Dashboard 2 React example components
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import DataTable from "examples/Tables/DataTable";
+import DashboardLayout from "admin/examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "admin/examples/Navbars/DashboardNavbar";
+import Footer from "admin/examples/Footer";
+import DataTable from "admin/examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+import authorsTableData from "admin/layouts/tables/data/authorsTableData";
+import projectsTableData from "admin/layouts/tables/data/projectsTableData";
 
 function Tables() {
   const { columns, rows } = authorsTableData();

@@ -28,8 +28,7 @@ import ResetLocation from "./helpers/ResetLocation.js";
 
 import { MaterialUIControllerProvider } from "./admin/context";
 import AppAdmin from "./admin/App.js";
-
-
+import Dashboard from "admin/layouts/dashboard";
 
 function App() {
   const [allCategories, setAllCategories] = useState([]);
@@ -405,157 +404,165 @@ function App() {
     getProductsByCategory(newCategory);
   };
 
+  const isAdminRoute = () => {
+    // Sesuaikan dengan pola rute admin Anda
+    return window.location.pathname.startsWith("/admin");
+  };
+
+  // sessionStorage.setItem("role", "admin");
+
+  const adminRole = sessionStorage.getItem("role") === "admin";
+
   return (
     <BrowserRouter>
-      <Header
-        loginModal={
-          <LoginModal
-            validLogin={validLogin}
-            setValidLogin={setValidLogin}
-            setLoginModalWindow={setLoginModalWindow}
-            loginModalWindow={loginModalWindow}
+      {isAdminRoute() && adminRole ? (
+        <MaterialUIControllerProvider>
+          <AppAdmin />
+        </MaterialUIControllerProvider>
+      ) : (
+        <>
+          <Header
+            loginModal={
+              <LoginModal
+                validLogin={validLogin}
+                setValidLogin={setValidLogin}
+                setLoginModalWindow={setLoginModalWindow}
+                loginModalWindow={loginModalWindow}
+                hideMenu={hideMenu}
+                getUser={getUser}
+                setCurrentUser={setCurrentUser}
+              />
+            }
+            activateLoginModal={activateLoginModal}
+            showModal={showModal}
+            isModalActive={isModalActive}
             hideMenu={hideMenu}
-            getUser={getUser}
-            setCurrentUser={setCurrentUser}
+            handleLogout={handleLogout}
+            validLogin={validLogin}
+            productsQuantity={productsQuantity}
           />
-        }
-        activateLoginModal={activateLoginModal}
-        showModal={showModal}
-        isModalActive={isModalActive}
-        hideMenu={hideMenu}
-        handleLogout={handleLogout}
-        validLogin={validLogin}
-        productsQuantity={productsQuantity}
-      />
-      <Routes>
-        <Route path="/" element={<RootSection />} />
+          <Routes>
+            <Route path="/" element={<RootSection />} />
 
-        <Route
-          path="/cart"
-          element={
-            <Cart
-              CartItem={
-                <CartItem
-                  clearCart={clearCart}
-                  cartItems={cartItems}
-                  handleAddProduct={handleAddProduct}
-                  handleRemoveProduct={handleRemoveProduct}
-                  cartTotals={
-                    <CartTotals
-                      className="cart-carttotals"
-                      totalPayment={totalPayment}
-                      productsQuantity={productsQuantity}
-                      taxes={taxes}
-                      validLogin={validLogin}
-                      showModal={showModal}
-                      isModalActive={isModalActive}
-                      activateLoginModal={activateLoginModal}
+            <Route
+              path="/cart"
+              element={
+                <Cart
+                  CartItem={
+                    <CartItem
+                      clearCart={clearCart}
+                      cartItems={cartItems}
+                      handleAddProduct={handleAddProduct}
+                      handleRemoveProduct={handleRemoveProduct}
+                      cartTotals={
+                        <CartTotals
+                          className="cart-carttotals"
+                          totalPayment={totalPayment}
+                          productsQuantity={productsQuantity}
+                          taxes={taxes}
+                          validLogin={validLogin}
+                          showModal={showModal}
+                          isModalActive={isModalActive}
+                          activateLoginModal={activateLoginModal}
+                        />
+                      }
                     />
                   }
+                  cartItems={cartItems}
+                  clearedCart={clearedCart}
                 />
               }
-              cartItems={cartItems}
-              clearedCart={clearedCart}
             />
-          }
-        />
 
-        <Route
-          exact
-          path="/menu"
-          element={
-            <Menu
-              findMenuItem={findMenuItem}
-              allProducts={allProducts}
-              allCategories={allCategories}
-              changeCategory={changeCategory}
-              handleAddProduct={handleAddProduct}
-              handleRemoveProduct={handleRemoveProduct}
-              activeCategory={activeCategory}
+            <Route
+              exact
+              path="/menu"
+              element={
+                <Menu
+                  findMenuItem={findMenuItem}
+                  allProducts={allProducts}
+                  allCategories={allCategories}
+                  changeCategory={changeCategory}
+                  handleAddProduct={handleAddProduct}
+                  handleRemoveProduct={handleRemoveProduct}
+                  activeCategory={activeCategory}
+                />
+              }
             />
-          }
-        />
-        <Route
-          path="/menu/:name"
-          element={
-            <SingleItem
-              handleAddProduct={handleAddProduct}
-              handleRemoveProduct={handleRemoveProduct}
-            />
-          }
-        />
-        <Route exact path="/blog" element={<Blog />} />
-        <Route path="/blog/:name" element={<BlogPost />} />
-        <Route path="/about" element={<About />} />
-        <Route
-          path="/register"
-          element={
-            validLogin ? (
-              <NotFound />
-            ) : (
-              <Register activateLoginModal={activateLoginModal} />
-            )
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            !validLogin ? (
-              <NotFound />
-            ) : (
-              <Profile
-                currentUser={currentUser}
-                getUser={getUser}
-                handleLogout={handleLogout}
-                updateUser={updateUser}
-              />
-            )
-          }
-        />
-        <Route
-          path="/checkout"
-          element={
-            <Checkout
-              checkoutSummary={
-                <CheckoutSummary
-                  cartItems={cartItems}
+            <Route
+              path="/menu/:name"
+              element={
+                <SingleItem
                   handleAddProduct={handleAddProduct}
                   handleRemoveProduct={handleRemoveProduct}
                 />
               }
-              totalPayment={totalPayment}
-              cartItems={cartItems}
-              productsQuantity={productsQuantity}
-              taxes={taxes}
-              currentUser={currentUser}
             />
-          }
-        />
-        <Route
-          path="/payment"
-          element={
-            <Payment
-              cartItems={cartItems}
-              totalPayment={totalPayment}
-              currentUser={currentUser}
+            <Route exact path="/blog" element={<Blog />} />
+            <Route path="/blog/:name" element={<BlogPost />} />
+            <Route path="/about" element={<About />} />
+            <Route
+              path="/register"
+              element={
+                validLogin ? (
+                  <NotFound />
+                ) : (
+                  <Register activateLoginModal={activateLoginModal} />
+                )
+              }
             />
-          }
-        />
-        <Route path="*" element={<NotFound />} />
-        <Route path="/refunds" element={<Refunds />} />
-        <Route path="/terms" element={<Terms />} />
+            <Route
+              path="/profile"
+              element={
+                !validLogin ? (
+                  <NotFound />
+                ) : (
+                  <Profile
+                    currentUser={currentUser}
+                    getUser={getUser}
+                    handleLogout={handleLogout}
+                    updateUser={updateUser}
+                  />
+                )
+              }
+            />
+            <Route
+              path="/checkout"
+              element={
+                <Checkout
+                  checkoutSummary={
+                    <CheckoutSummary
+                      cartItems={cartItems}
+                      handleAddProduct={handleAddProduct}
+                      handleRemoveProduct={handleRemoveProduct}
+                    />
+                  }
+                  totalPayment={totalPayment}
+                  cartItems={cartItems}
+                  productsQuantity={productsQuantity}
+                  taxes={taxes}
+                  currentUser={currentUser}
+                />
+              }
+            />
+            <Route
+              path="/payment"
+              element={
+                <Payment
+                  cartItems={cartItems}
+                  totalPayment={totalPayment}
+                  currentUser={currentUser}
+                />
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+            <Route path="/refunds" element={<Refunds />} />
+            <Route path="/terms" element={<Terms />} />
+          </Routes>
 
-        <Route
-          path="/admin"
-          element={
-            <MaterialUIControllerProvider>
-              <AppAdmin />
-            </MaterialUIControllerProvider>
-          }
-        />
-      </Routes>
-
-      <Footer />
+          <Footer />
+        </>
+      )}
     </BrowserRouter>
   );
 }

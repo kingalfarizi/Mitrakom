@@ -19,18 +19,18 @@ Coded by www.creative-tim.com
 import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
-import MDProgress from "components/MDProgress";
+import MDBox from "admin/components/MDBox";
+import MDTypography from "admin/components/MDTypography";
+import MDAvatar from "admin/components/MDAvatar";
+import MDProgress from "admin/components/MDProgress";
 
 // Images
-import LogoAsana from "assets/images/small-logos/logo-asana.svg";
-import logoGithub from "assets/images/small-logos/github.svg";
-import logoAtlassian from "assets/images/small-logos/logo-atlassian.svg";
-import logoSlack from "assets/images/small-logos/logo-slack.svg";
-import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
-import logoInvesion from "assets/images/small-logos/logo-invision.svg";
+import LogoAsana from "admin/assets/images/small-logos/logo-asana.svg";
+import logoGithub from "admin/assets/images/small-logos/github.svg";
+import logoAtlassian from "admin/assets/images/small-logos/logo-atlassian.svg";
+import logoSlack from "admin/assets/images/small-logos/logo-slack.svg";
+import logoSpotify from "admin/assets/images/small-logos/logo-spotify.svg";
+import logoInvesion from "admin/assets/images/small-logos/logo-invision.svg";
 
 export default function data() {
   const Project = ({ image, name }) => (

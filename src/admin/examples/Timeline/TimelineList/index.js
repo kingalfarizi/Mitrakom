@@ -20,14 +20,14 @@ import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import MDBox from "admin/components/MDBox";
+import MDTypography from "admin/components/MDTypography";
 
 // Material Dashboard 2 React components
-import { useMaterialUIController } from "context";
+import { useMaterialUIController } from "admin/context";
 
 // Timeline context
-import { TimelineProvider } from "examples/Timeline/context";
+import { TimelineProvider } from "admin/examples/Timeline/context";
 
 function TimelineList({ title, dark, children }) {
   const [controller] = useMaterialUIController();

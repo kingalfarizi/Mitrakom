@@ -29,12 +29,12 @@ import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDInput from "components/MDInput";
+import MDBox from "admin/components/MDBox";
+import MDInput from "admin/components/MDInput";
 
 // Material Dashboard 2 React example components
-import Breadcrumbs from "examples/Breadcrumbs";
-import NotificationItem from "examples/Items/NotificationItem";
+import Breadcrumbs from "admin/examples/Breadcrumbs";
+import NotificationItem from "admin/examples/Items/NotificationItem";
 
 // Custom styles for DashboardNavbar
 import {
@@ -43,7 +43,7 @@ import {
   navbarRow,
   navbarIconButton,
   navbarMobileMenu,
-} from "examples/Navbars/DashboardNavbar/styles";
+} from "admin/examples/Navbars/DashboardNavbar/styles";
 
 // Material Dashboard 2 React context
 import {
@@ -51,7 +51,7 @@ import {
   setTransparentNavbar,
   setMiniSidenav,
   setOpenConfigurator,
-} from "context";
+} from "admin/context";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
