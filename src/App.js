@@ -26,6 +26,11 @@ import BlogPost from "./routes/blog-post/BlogPost.js";
 import Profile from "./routes/profile/Profile.js";
 import ResetLocation from "./helpers/ResetLocation.js";
 
+import { MaterialUIControllerProvider } from "./admin/context";
+import AppAdmin from "./admin/App.js";
+
+
+
 function App() {
   const [allCategories, setAllCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState("Menu");
@@ -449,7 +454,6 @@ function App() {
                   }
                 />
               }
-
               cartItems={cartItems}
               clearedCart={clearedCart}
             />
@@ -457,7 +461,8 @@ function App() {
         />
 
         <Route
-          exact path="/menu"
+          exact
+          path="/menu"
           element={
             <Menu
               findMenuItem={findMenuItem}
@@ -482,8 +487,31 @@ function App() {
         <Route exact path="/blog" element={<Blog />} />
         <Route path="/blog/:name" element={<BlogPost />} />
         <Route path="/about" element={<About />} />
-        <Route path="/register" element={validLogin ? <NotFound /> : <Register activateLoginModal={activateLoginModal} />} />
-        <Route path="/profile" element={!validLogin ? <NotFound /> : <Profile currentUser={currentUser} getUser={getUser} handleLogout={handleLogout} updateUser={updateUser} />} />
+        <Route
+          path="/register"
+          element={
+            validLogin ? (
+              <NotFound />
+            ) : (
+              <Register activateLoginModal={activateLoginModal} />
+            )
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            !validLogin ? (
+              <NotFound />
+            ) : (
+              <Profile
+                currentUser={currentUser}
+                getUser={getUser}
+                handleLogout={handleLogout}
+                updateUser={updateUser}
+              />
+            )
+          }
+        />
         <Route
           path="/checkout"
           element={
@@ -516,6 +544,15 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/refunds" element={<Refunds />} />
         <Route path="/terms" element={<Terms />} />
+
+        <Route
+          path="/admin"
+          element={
+            <MaterialUIControllerProvider>
+              <AppAdmin />
+            </MaterialUIControllerProvider>
+          }
+        />
       </Routes>
 
       <Footer />
