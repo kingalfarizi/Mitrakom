@@ -23,8 +23,6 @@ import MDBadge from "admin/components/MDBadge";
 
 // Images
 import team2 from "admin/assets/images/team-2.jpg";
-import team3 from "admin/assets/images/team-3.jpg";
-import team4 from "admin/assets/images/team-4.jpg";
 
 export default function data() {
   const Author = ({ image, name }) => (
@@ -107,7 +105,7 @@ export default function data() {
         action: (
           <MDTypography
             component="a"
-            href="#"
+            href="/admin/barang/123"
             variant="caption"
             color="text"
             fontWeight="medium"
@@ -156,7 +154,7 @@ export default function data() {
         action: (
           <MDTypography
             component="a"
-            href="#"
+            href="/admin/barang/123"
             variant="caption"
             color="text"
             fontWeight="medium"
@@ -205,7 +203,7 @@ export default function data() {
         action: (
           <MDTypography
             component="a"
-            href="#"
+            href="/admin/barang/123"
             variant="caption"
             color="text"
             fontWeight="medium"

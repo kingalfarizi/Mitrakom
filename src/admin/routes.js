@@ -39,7 +39,7 @@ Coded by www.creative-tim.com
 import Dashboard from "admin/layouts/dashboard";
 import Tables from "admin/layouts/tables";
 import Billing from "admin/layouts/billing";
-import RTL from "admin/layouts/rtl";
+// import RTL from "admin/layouts/rtl";
 import Notifications from "admin/layouts/notifications";
 import Profile from "admin/layouts/profile";
 import SignIn from "admin/layouts/authentication/sign-in";
