@@ -44,6 +44,7 @@ import Notifications from "admin/layouts/notifications";
 import Profile from "admin/layouts/profile";
 import SignIn from "admin/layouts/authentication/sign-in";
 import SignUp from "admin/layouts/authentication/sign-up";
+import Barang from "admin/layouts/barang"
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -56,6 +57,14 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/admin/dashboard",
     component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "Barang",
+    key: "barangs",
+    icon: <Icon fontSize="small">inventory</Icon>,
+    route: "/admin/barang",
+    component: <Barang />,
   },
   {
     type: "collapse",
