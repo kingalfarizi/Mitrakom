@@ -29,13 +29,13 @@ import { useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Button } from "@mui/material";
 import DataTable from "admin/examples/Tables/DataTable";
-import barangData from "admin/layouts/posts/data/barangData";
+import postData from "admin/layouts/posts/data/postData";
 
 function Tables() {
   const [value, setValue] = useState("<p>Silakan menambahkan post baru</p>");
   const [text, setText] = useState("");
 
-  const { columns, rows } = barangData();
+  const { columns, rows } = postData();
 
   console.log(process.env.REACT_APP_TINYMCE);
 

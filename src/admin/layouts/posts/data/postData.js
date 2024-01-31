@@ -26,7 +26,12 @@ import team2 from "admin/assets/images/team-2.jpg";
 
 export default function data() {
   const Author = ({ image, name }) => (
-    <MDBox display="flex" alignItems="center" lineHeight={1}>
+    <MDBox
+      display="flex"
+      alignItems="center"
+      lineHeight={1}
+      style={{ width: "13rem" }}
+    >
       <MDAvatar src={image} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
@@ -50,37 +55,38 @@ export default function data() {
     </MDBox>
   );
 
+  const potongKalimat = (kalimat) => {
+    return kalimat.split(" ").slice(0, 20).join(" ") + "...";
+  };
+
   return {
     columns: [
-      { Header: "Judul Post", accessor: "nama", align: "left" },
+      { Header: "Judul Post", accessor: "judul", align: "left" },
       {
         Header: "Isi Post",
         accessor: "deskripsi",
         align: "left",
       },
-      { Header: "nama penulis", accessor: "harga", align: "center" },
-      { Header: "kategori", accessor: "kategori", align: "center" },
-      { Header: "status", accessor: "status", align: "center" },
+      { Header: "nama penulis", accessor: "penulis", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
 
     rows: [
       {
-        nama: <Author image={team2} name="Asus ROG" />,
+        judul: (
+          <Author
+            image={team2}
+            name="Melampaui Batasan: Teknologi Kamera Smartphone Terbaru Mengubah Cara Kita Mengabadikan Momen"
+          />
+        ),
         deskripsi: (
-          <Job description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit corporis ducimus ad provident nesciunt. Consequuntur accusamus officia molestias vero saepe sint dolorum ut?" />
+          <Job
+            description={potongKalimat(
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta nam neque voluptatum eius, est dolorem fuga animi possimus doloribus. Voluptas maiores quos libero natus nemo maxime aspernatur autem iusto voluptate."
+            )}
+          />
         ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge
-              badgeContent="tersedia"
-              color="success"
-              variant="gradient"
-              size="sm"
-            />
-          </MDBox>
-        ),
-        harga: (
+        penulis: (
           <MDTypography
             component="a"
             href="#"
@@ -88,24 +94,13 @@ export default function data() {
             color="text"
             fontWeight="medium"
           >
-            100.000
-          </MDTypography>
-        ),
-        kategori: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            Kategori
+            Udin
           </MDTypography>
         ),
         action: (
           <MDTypography
             component="a"
-            href="/admin/barang/123"
+            href="/admin/posts/123"
             variant="caption"
             color="text"
             fontWeight="medium"
