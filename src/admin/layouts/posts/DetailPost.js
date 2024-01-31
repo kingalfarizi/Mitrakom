@@ -28,14 +28,10 @@ import Footer from "admin/examples/Footer";
 import { useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Button } from "@mui/material";
-import DataTable from "admin/examples/Tables/DataTable";
-import barangData from "admin/layouts/posts/data/barangData";
 
-function Tables() {
+function DetailPost() {
   const [value, setValue] = useState("<p>Silakan menambahkan post baru</p>");
   const [text, setText] = useState("");
-
-  const { columns, rows } = barangData();
 
   console.log(process.env.REACT_APP_TINYMCE);
 
@@ -60,14 +56,32 @@ function Tables() {
                   Tambah posts
                 </MDTypography>
               </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns, rows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
+              <MDBox pt={3} style={{ padding: 15 }}>
+                <Editor
+                  apiKey={process.env.REACT_APP_TINYMCE}
+                  value={value}
+                  onInit={(evt, editor) => {
+                    setText(editor.getContent({ format: "text" }));
+                  }}
+                  onEditorChange={(newValue, editor) => {
+                    setValue(newValue);
+                    setText(editor.getContent({ format: "html" }));
+                  }}
+                  init={{
+                    height: 400,
+                    menubar: false,
+                    plugins:
+                      "mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
+                    toolbar:
+                      "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                    content_style:
+                      "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                  }}
                 />
+                {/* <pre>{text}</pre> */}
+                <Button variant="contained" style={{color:'white'}} color="primary">
+                  Simpan
+                </Button>
               </MDBox>
             </Card>
           </Grid>
@@ -78,4 +92,4 @@ function Tables() {
   );
 }
 
-export default Tables;
+export default DetailPost;
