@@ -26,6 +26,10 @@ export const createProduct = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send(err.message);
+      console.log(err.message);
+      res.status(500).json({
+        message: "Failed to create product",
+        error: err,
+      });
     });
 };

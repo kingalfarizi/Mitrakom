@@ -40,9 +40,22 @@ const TambahBarang = () => {
     };
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({ barang });
+  const handleSubmit = async () => {
+    console.log(barang);
+    try {
+      const response = await fetch("http://localhost:3000/products", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(barang),
+      });
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -69,7 +82,7 @@ const TambahBarang = () => {
               <MDBox pt={3} style={{ padding: 15 }}>
                 {/* <FormControl> */}
 
-                <form onSubmit={handleSubmit} encType="multipart/form-data">
+                <form encType="multipart/form-data">
                   <label htmlFor="barang">Image</label>
                   <img
                     src=""
@@ -133,9 +146,9 @@ const TambahBarang = () => {
                   />
 
                   <Button
-                    type="submit"
                     variant="contained"
                     style={{ color: "black" }}
+                    onClick={handleSubmit}
                   >
                     Submit
                   </Button>
