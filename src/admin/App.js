@@ -58,6 +58,7 @@ import brandWhite from "./assets/images/logo-ct.png";
 import brandDark from "./assets/images/logo-ct-dark.png";
 import DetailBarang from "./layouts/barang/DetailBarang";
 import DetailPost from "./layouts/posts/DetailPost";
+import TambahBarang from "./layouts/barang/TambahBarang";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -214,6 +215,7 @@ export default function App() {
       <Routes>
         {getRoutes(routes)}
         <Route path="*" element={<Navigate to="/admin/dashboard" />} />
+        <Route path="/admin/barang/add" element={<TambahBarang />} />
         <Route path="/admin/barang/:id" element={<DetailBarang />} />
         <Route path="/admin/posts/:id" element={<DetailPost />} />
       </Routes>
