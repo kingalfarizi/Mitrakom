@@ -112,3 +112,14 @@ export const updateProduct = (id, product) => {
     });
   });
 };
+
+export const deleteProduct = (id) => {
+  return new Promise((resolve, reject) => {
+    const query = "DELETE FROM Barangs WHERE id = ?";
+
+    sql
+      .execute(query, [id])
+      .then((result) => resolve(result))
+      .catch((err) => reject(err));
+  });
+};

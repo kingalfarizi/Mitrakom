@@ -25,6 +25,7 @@ import MDBadge from "admin/components/MDBadge";
 import team2 from "admin/assets/images/team-2.jpg";
 import { useQuery } from "@tanstack/react-query";
 import rupiah from "helpers/rupiah";
+import { useNavigate } from "react-router-dom";
 
 const fetchData = async () => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/products`);
@@ -38,6 +39,22 @@ export default function Data() {
     queryFn: fetchData,
     refetchIntervalInBackground: 1000,
   });
+
+  const navigate = useNavigate();
+
+  const deleteData = async (id) => {
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/products/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
+    const data = await response.json();
+    if (data) {
+      alert("Data berhasil dihapus");
+      navigate(0);
+    }
+  };
 
   const Author = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -120,15 +137,36 @@ export default function Data() {
             </MDTypography>
           ),
           action: (
-            <MDTypography
-              component="a"
-              href={`/admin/barang/${item.id}`}
-              variant="caption"
-              color="text"
-              fontWeight="medium"
-            >
-              Edit
-            </MDTypography>
+            <div style={{ display: "flex", gap: 4 }}>
+              <MDTypography
+                component="a"
+                href={`/admin/barang/${item.id}`}
+                variant="caption"
+                color="text"
+                fontWeight="medium"
+              >
+                Edit
+              </MDTypography>
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+                onClick={() => deleteData(item.id)}
+              >
+                <MDTypography
+                  component="a"
+                  variant="caption"
+                  style={{ color: "red" }}
+                  fontWeight="medium"
+                >
+                  Delete
+                </MDTypography>
+              </div>
+            </div>
           ),
         }))
       : [

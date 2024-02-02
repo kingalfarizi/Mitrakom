@@ -65,10 +65,26 @@ export const updateProduct = (req, res) => {
       res.status(200).json({
         message: "Product updated",
         data: product,
-        result
+        result,
       });
     })
     .catch((err) => {
       res.status(500).send(err.message);
+    });
+};
+
+export const deleteProduct = (req, res) => {
+  const { id } = req.params;
+
+  productServices
+    .deleteProduct(id)
+    .then((result) => {
+      res.status(200).json({
+        message: "Product deleted",
+        data: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send(err);
     });
 };
