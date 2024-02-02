@@ -46,7 +46,7 @@ const Payment = ({ cartItems, totalPayment }) => {
 
   useEffect(() => {
     if (submit && Object.keys(formError).length === 0) {
-      fetch("http://localhost:3000/orders", {
+      fetch(`${process.env.REACT_APP_API_URL}/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataPost),

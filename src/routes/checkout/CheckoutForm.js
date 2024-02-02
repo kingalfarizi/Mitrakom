@@ -61,11 +61,6 @@ const CheckoutForm = ({
     };
 
     sessionStorage.setItem("orderItems", JSON.stringify(data));
-    // const post = await fetch("http://localhost:3000/orders", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({}),
-    // });
     setFormError(validateForm(formValue));
     setSubmit(true);
     // ResetLocation();
@@ -74,7 +69,7 @@ const CheckoutForm = ({
   useEffect(() => {
     if (submit && Object.keys(formError).length === 0) {
       const dataPost = sessionStorage.getItem("orderItems");
-      fetch("http://localhost:3000/orders", {
+      fetch(`${process.env.REACT_APP_API_URL}/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: dataPost,
