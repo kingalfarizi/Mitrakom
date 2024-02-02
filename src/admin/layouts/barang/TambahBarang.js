@@ -125,6 +125,7 @@ const TambahBarang = () => {
 
                   <label htmlFor="barang">Harga Barang</label>
                   <TextField
+                    type="number"
                     id="barang"
                     variant="outlined"
                     margin="normal"

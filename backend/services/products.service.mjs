@@ -13,12 +13,12 @@ export const getAllProducts = () => {
   });
 };
 
-export const createProduct = async (product) => {
-  return await new Promise((resolve, reject) => {
+export const createProduct = (product) => {
+  return new Promise(async (resolve, reject) => {
     const { id = uuidv4(), nama, deskripsi, harga, kategori, image } = product;
 
     // const query = `INSERT INTO Barangs (id, ItemName, ItemDesc, ItemPrice, Category, ItemImg) VALUES (?, ?, ?, ?, ?, ?)`;
-    // const params = [id, nama, deskripsi, harga, kategori, 'image'];
+    // const params = [id, nama, deskripsi, harga, kategori, "image"];
     // // console.log(params);
 
     // sql
@@ -34,25 +34,21 @@ export const createProduct = async (product) => {
       (err, result) => {
         if (err) {
           reject(err);
-          console.log(`Error: ${err}`)
         } else {
-          //   const query = `INSERT INTO Barangs (id, ItemName, ItemDesc, ItemPrice, Category, ItemImg) VALUES (?, ?, ?, ?, ?, ?)`;
-          //   const params = [
-          //     id,
-          //     nama,
-          //     deskripsi,
-          //     harga,
-          //     kategori,
-          //     result.secure_url,
-          //   ];
-          //   // console.log(params);
-
-          //   sql
-          //     .execute(query, [...params])
-          //     .then((result) => resolve(result))
-          //     .catch((err) => reject(err));
-          console.log(`Result: ${result}`)
-          resolve(result);
+          const query = `INSERT INTO Barangs (id, ItemName, ItemDesc, ItemPrice, Category, ItemImg) VALUES (?, ?, ?, ?, ?, ?)`;
+          const params = [
+            id,
+            nama,
+            deskripsi,
+            harga,
+            kategori,
+            result.secure_url,
+          ];
+          // console.log(params);
+          sql
+            .execute(query, [...params])
+            .then((result) => resolve(result))
+            .catch((err) => reject(err));
         }
       }
     );
