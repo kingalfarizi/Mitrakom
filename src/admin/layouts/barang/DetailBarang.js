@@ -6,7 +6,7 @@ import Footer from "admin/examples/Footer";
 import DashboardLayout from "admin/examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "admin/examples/Navbars/DashboardNavbar";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const fetchdata = async (id) => {
   const response = await fetch(
@@ -18,6 +18,7 @@ const fetchdata = async (id) => {
 
 const DetailBarang = () => {
   let { id } = useParams();
+  const navigate = useNavigate();
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["product", id],
@@ -76,7 +77,10 @@ const DetailBarang = () => {
       );
 
       const data = await response.json();
-      console.log(data);
+      if (data) {
+        alert("Data berhasil diubah");
+        navigate("/admin/barang");
+      }
     } catch (error) {
       console.log(error);
     }
