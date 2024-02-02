@@ -5,9 +5,11 @@ import Footer from "admin/examples/Footer";
 import DashboardLayout from "admin/examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "admin/examples/Navbars/DashboardNavbar";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const TambahBarang = () => {
   const [base64Images, setBase64Images] = useState("");
+  const navigate = useNavigate();
 
   const [barang, setBarang] = useState({
     nama: "",
@@ -43,16 +45,22 @@ const TambahBarang = () => {
   const handleSubmit = async () => {
     // console.log(barang);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/products`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(barang),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/products`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(barang),
+        }
+      );
 
       const data = await response.json();
-      console.log(data);
+      if (data) {
+        alert("Data berhasil ditambahkan");
+        navigate("/admin/barang");
+      }
     } catch (error) {
       console.log(error);
     }
