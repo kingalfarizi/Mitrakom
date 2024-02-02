@@ -41,7 +41,7 @@ const TambahBarang = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(barang);
+    // console.log(barang);
     try {
       const response = await fetch("http://localhost:3000/products", {
         method: "POST",

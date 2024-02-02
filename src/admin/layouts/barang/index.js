@@ -28,7 +28,9 @@ import Footer from "admin/examples/Footer";
 import DataTable from "admin/examples/Tables/DataTable";
 
 // Data
-import barangData from "admin/layouts/barang/data/barangData";
+import barangData from "admin/layouts/barang/data/BarangData";
+import { Link } from "react-router-dom";
+import { Button } from "@mui/material";
 
 function Tables() {
   const { columns, rows } = barangData();
@@ -49,10 +51,18 @@ function Tables() {
                 bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
               >
                 <MDTypography variant="h6" color="white">
                   Data Barang
                 </MDTypography>
+                <Link to={"add"}>
+                  <Button variant="contained" style={{ color: "white" }}>
+                    Tambah Barang
+                  </Button>
+                </Link>
               </MDBox>
               <MDBox pt={3}>
                 <DataTable

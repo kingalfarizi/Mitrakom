@@ -23,8 +23,22 @@ import MDBadge from "admin/components/MDBadge";
 
 // Images
 import team2 from "admin/assets/images/team-2.jpg";
+import { useQuery } from "@tanstack/react-query";
+import rupiah from "helpers/rupiah";
 
-export default function data() {
+const fetchData = async () => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/products`);
+  const data = await response.json();
+  return data;
+};
+
+export default function Data() {
+  const { isLoading, isError, data } = useQuery({
+    queryKey: ["products"],
+    queryFn: fetchData,
+    refetchIntervalInBackground: 1000,
+  });
+
   const Author = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" />
@@ -64,154 +78,109 @@ export default function data() {
       { Header: "action", accessor: "action", align: "center" },
     ],
 
-    rows: [
-      {
-        nama: <Author image={team2} name="Asus ROG" />,
-        deskripsi: (
-          <Job description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit corporis ducimus ad provident nesciunt. Consequuntur accusamus officia molestias vero saepe sint dolorum ut?" />
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge
-              badgeContent="tersedia"
-              color="success"
-              variant="gradient"
-              size="sm"
+    rows: data
+      ? data.data.map((item) => ({
+          nama: (
+            <Author
+              image={item.ItemImg ? item.ItemImg : team2}
+              name={item.ItemName}
             />
-          </MDBox>
-        ),
-        harga: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            100.000
-          </MDTypography>
-        ),
-        kategori: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            Kategori
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography
-            component="a"
-            href="/admin/barang/123"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        nama: <Author image={team2} name="Asus ROG" />,
-        deskripsi: (
-          <Job description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit corporis ducimus ad provident nesciunt. Consequuntur accusamus officia molestias vero saepe sint dolorum ut?" />
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge
-              badgeContent="tersedia"
-              color="success"
-              variant="gradient"
-              size="sm"
-            />
-          </MDBox>
-        ),
-        harga: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            100.000
-          </MDTypography>
-        ),
-        kategori: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            Kategori
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography
-            component="a"
-            href="/admin/barang/123"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        nama: <Author image={team2} name="Asus ROG" />,
-        deskripsi: (
-          <Job description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit corporis ducimus ad provident nesciunt. Consequuntur accusamus officia molestias vero saepe sint dolorum ut?" />
-        ),
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge
-              badgeContent="tersedia"
-              color="success"
-              variant="gradient"
-              size="sm"
-            />
-          </MDBox>
-        ),
-        harga: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            100.000
-          </MDTypography>
-        ),
-        kategori: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            Kategori
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography
-            component="a"
-            href="/admin/barang/123"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            Edit
-          </MDTypography>
-        ),
-      },
-    ],
+          ),
+          deskripsi: <Job description={item.ItemDesc} />,
+          status: (
+            <MDBox ml={-1}>
+              <MDBadge
+                badgeContent="tersedia"
+                color="success"
+                variant="gradient"
+                size="sm"
+              />
+            </MDBox>
+          ),
+          harga: (
+            <MDTypography
+              component="a"
+              href="#"
+              variant="caption"
+              color="text"
+              fontWeight="medium"
+            >
+              {rupiah(item.ItemPrice)}
+            </MDTypography>
+          ),
+          kategori: (
+            <MDTypography
+              component="a"
+              href="#"
+              variant="caption"
+              color="text"
+              fontWeight="medium"
+            >
+              {item.Category}
+            </MDTypography>
+          ),
+          action: (
+            <MDTypography
+              component="a"
+              href={`/admin/barang/${item.id}`}
+              variant="caption"
+              color="text"
+              fontWeight="medium"
+            >
+              Edit
+            </MDTypography>
+          ),
+        }))
+      : [
+          {
+            nama: <Author image={team2} name="Asus ROG" />,
+            deskripsi: (
+              <Job description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit corporis ducimus ad provident nesciunt. Consequuntur accusamus officia molestias vero saepe sint dolorum ut?" />
+            ),
+            status: (
+              <MDBox ml={-1}>
+                <MDBadge
+                  badgeContent="tersedia"
+                  color="success"
+                  variant="gradient"
+                  size="sm"
+                />
+              </MDBox>
+            ),
+            harga: (
+              <MDTypography
+                component="a"
+                href="#"
+                variant="caption"
+                color="text"
+                fontWeight="medium"
+              >
+                100.000
+              </MDTypography>
+            ),
+            kategori: (
+              <MDTypography
+                component="a"
+                href="#"
+                variant="caption"
+                color="text"
+                fontWeight="medium"
+              >
+                Kategori
+              </MDTypography>
+            ),
+            action: (
+              <MDTypography
+                component="a"
+                href="/admin/barang/123"
+                variant="caption"
+                color="text"
+                fontWeight="medium"
+              >
+                Edit
+              </MDTypography>
+            ),
+          },
+        ],
   };
 }

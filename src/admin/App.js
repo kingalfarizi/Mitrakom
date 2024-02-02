@@ -59,6 +59,9 @@ import brandDark from "./assets/images/logo-ct-dark.png";
 import DetailBarang from "./layouts/barang/DetailBarang";
 import DetailPost from "./layouts/posts/DetailPost";
 import TambahBarang from "./layouts/barang/TambahBarang";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -191,34 +194,36 @@ export default function App() {
       </ThemeProvider>
     </CacheProvider>
   ) : (
-    <ThemeProvider theme={darkMode ? themeDark : theme}>
-      <CssBaseline />
-      {layout === "dashboard" && (
-        <>
-          <Sidenav
-            color={sidenavColor}
-            brand={
-              (transparentSidenav && !darkMode) || whiteSidenav
-                ? brandDark
-                : brandWhite
-            }
-            brandName="Mitrakom"
-            routes={routes}
-            onMouseEnter={handleOnMouseEnter}
-            onMouseLeave={handleOnMouseLeave}
-          />
-          <Configurator />
-          {configsButton}
-        </>
-      )}
-      {layout === "vr" && <Configurator />}
-      <Routes>
-        {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/admin/dashboard" />} />
-        <Route path="/admin/barang/add" element={<TambahBarang />} />
-        <Route path="/admin/barang/:id" element={<DetailBarang />} />
-        <Route path="/admin/posts/:id" element={<DetailPost />} />
-      </Routes>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={darkMode ? themeDark : theme}>
+        <CssBaseline />
+        {layout === "dashboard" && (
+          <>
+            <Sidenav
+              color={sidenavColor}
+              brand={
+                (transparentSidenav && !darkMode) || whiteSidenav
+                  ? brandDark
+                  : brandWhite
+              }
+              brandName="Mitrakom"
+              routes={routes}
+              onMouseEnter={handleOnMouseEnter}
+              onMouseLeave={handleOnMouseLeave}
+            />
+            <Configurator />
+            {configsButton}
+          </>
+        )}
+        {layout === "vr" && <Configurator />}
+        <Routes>
+          {getRoutes(routes)}
+          <Route path="*" element={<Navigate to="/admin/dashboard" />} />
+          <Route path="/admin/barang/add" element={<TambahBarang />} />
+          <Route path="/admin/barang/:id" element={<DetailBarang />} />
+          <Route path="/admin/posts/:id" element={<DetailPost />} />
+        </Routes>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }

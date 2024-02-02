@@ -33,3 +33,42 @@ export const createProduct = (req, res) => {
       });
     });
 };
+
+export const getProductById = (req, res) => {
+  const { id } = req.params;
+
+  productServices
+    .getProductById(id)
+    .then((result) => {
+      res.status(200).json({
+        message: "Product retrieved",
+        data: result[0],
+      });
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+};
+
+export const updateProduct = (req, res) => {
+  const { id } = req.params;
+  const product = req.body;
+
+  // res.status(200).json({
+  //   message: "Product updated",
+  //   data: product,
+  // });
+
+  productServices
+    .updateProduct(id, product)
+    .then((result) => {
+      res.status(200).json({
+        message: "Product updated",
+        data: product,
+        result
+      });
+    })
+    .catch((err) => {
+      res.status(500).send(err.message);
+    });
+};
