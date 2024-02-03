@@ -23,19 +23,20 @@ export const createUser = (user) => {
         const { id, email, password, fullname, address, number } = user;
         let query;
         let params;
+        let role = "user";
 
         if (address === "" && number === "") {
-            query = 'INSERT INTO users (id, email, password, fullname) VALUES (?, ?, ?, ?)';
-            params = [id, email, password, fullname];
+            query = 'INSERT INTO users (id, email, password, fullname, role) VALUES (?, ?, ?, ?, ?)';
+            params = [id, email, password, fullname, role];
         } else if (address === "") {
-            query = 'INSERT INTO users (id, email, password, fullname, number) VALUES (?, ?, ?, ?, ?)';
-            params = [id, email, password, fullname, number];
+            query = 'INSERT INTO users (id, email, password, fullname, number, role) VALUES (?, ?, ?, ?, ?, ?)';
+            params = [id, email, password, fullname, number, role];
         } else if (number === "") {
-            query = 'INSERT INTO users (id, email, password, fullname, address) VALUES (?, ?, ?, ?, ?)';
-            params = [id, email, password, fullname, address];
+            query = 'INSERT INTO users (id, email, password, fullname, address, role) VALUES (?, ?, ?, ?, ?, ?)';
+            params = [id, email, password, fullname, address, role];
         } else {
-            query = 'INSERT INTO users (id, email, password, fullname, address, number) VALUES (?, ?, ?, ?, ?, ?)';
-            params = [id, email, password, fullname, address, number];
+            query = 'INSERT INTO users (id, email, password, fullname, address, number, role) VALUES (?, ?, ?, ?, ?, ?, ?)';
+            params = [id, email, password, fullname, address, number, role];
         }
 
         sql.execute(query, [...params])
