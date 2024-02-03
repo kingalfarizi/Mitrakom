@@ -1,34 +1,42 @@
-'use strict';
+"use strict";
+
+const { v4: uuidv4 } = require("uuid");
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('posts', {
+    await queryInterface.createTable("posts", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING,
+        defaultValue: () => uuidv4(),
       },
       judul: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       body: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       penulis: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+      },
+      image: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('posts');
-  }
+    await queryInterface.dropTable("posts");
+  },
 };
