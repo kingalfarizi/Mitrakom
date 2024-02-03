@@ -23,6 +23,7 @@ import MDBadge from "admin/components/MDBadge";
 
 // Images
 import team2 from "admin/assets/images/team-2.jpg";
+import MDButton from "admin/components/MDButton";
 
 export default function data() {
   const Author = ({ image, name }) => (
@@ -98,15 +99,46 @@ export default function data() {
           </MDTypography>
         ),
         action: (
-          <MDTypography
-            component="a"
-            href="/admin/post/123"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            Edit
-          </MDTypography>
+          <div style={{ display: "flex", gap: 4 }}>
+            <MDButton
+              variant="outlined"
+              color="info"
+              href={`/admin/post/123`}
+            >
+              <MDTypography
+                component="a"
+                variant="caption"
+                color="text"
+                fontWeight="medium"
+              >
+                Edit
+              </MDTypography>
+            </MDButton>
+
+            <MDButton
+              variant="outlined"
+              color="error"
+              onClick={() => alert(1)}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <MDTypography
+                  component="a"
+                  variant="caption"
+                  style={{ color: "red" }}
+                  fontWeight="medium"
+                >
+                  Delete
+                </MDTypography>
+              </div>
+            </MDButton>
+          </div>
         ),
       },
     ],
