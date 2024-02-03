@@ -43,6 +43,14 @@ const TambahBarang = () => {
   };
 
   const handleSubmit = async () => {
+    // cek jika ada salah satu di barang yang kosong
+    for (const key in barang) {
+      if (barang[key] === "") {
+        alert("Tolong lengkapi semua data barang");
+        return;
+      }
+    }
+
     // console.log(barang);
     try {
       const response = await fetch(

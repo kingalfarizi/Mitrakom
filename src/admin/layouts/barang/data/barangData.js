@@ -26,6 +26,7 @@ import team2 from "admin/assets/images/team-2.jpg";
 import { useQuery } from "@tanstack/react-query";
 import rupiah from "helpers/rupiah";
 import { useNavigate } from "react-router-dom";
+import MDButton from "admin/components/MDButton";
 
 const fetchData = async () => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/products`);
@@ -40,9 +41,13 @@ export default function Data() {
     refetchIntervalInBackground: 1000,
   });
 
-  const navigate = useNavigate();
-
   const deleteData = async (id) => {
+    const konfirmasi = window.confirm(
+      "Apakah anda yakin ingin menghapus data ini?"
+    );
+
+    if (!konfirmasi) return;
+
     const response = await fetch(
       `${process.env.REACT_APP_API_URL}/products/${id}`,
       {
@@ -52,7 +57,7 @@ export default function Data() {
     const data = await response.json();
     if (data) {
       alert("Data berhasil dihapus");
-      navigate(0);
+      window.location.reload();
     }
   };
 
@@ -138,34 +143,44 @@ export default function Data() {
           ),
           action: (
             <div style={{ display: "flex", gap: 4 }}>
-              <MDTypography
-                component="a"
+              <MDButton
+                variant="outlined"
+                color="info"
                 href={`/admin/barang/${item.id}`}
-                variant="caption"
-                color="text"
-                fontWeight="medium"
-              >
-                Edit
-              </MDTypography>
-
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                }}
-                onClick={() => deleteData(item.id)}
               >
                 <MDTypography
                   component="a"
                   variant="caption"
-                  style={{ color: "red" }}
+                  color="text"
                   fontWeight="medium"
                 >
-                  Delete
+                  Edit
                 </MDTypography>
-              </div>
+              </MDButton>
+
+              <MDButton
+                variant="outlined"
+                color="error"
+                onClick={() => deleteData(item.id)}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <MDTypography
+                    component="a"
+                    variant="caption"
+                    style={{ color: "red" }}
+                    fontWeight="medium"
+                  >
+                    Delete
+                  </MDTypography>
+                </div>
+              </MDButton>
             </div>
           ),
         }))

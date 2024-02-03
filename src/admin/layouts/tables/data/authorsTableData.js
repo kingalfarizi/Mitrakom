@@ -78,6 +78,101 @@ export default function data() {
         ),
       },
       {
+        author: <Author image={team2} name="John Michael" email="john@creative-tim.com" />,
+        function: <Job title="Manager" description="Organization" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        employed: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            23/04/18
+          </MDTypography>
+        ),
+        action: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Edit
+          </MDTypography>
+        ),
+      },
+      {
+        author: <Author image={team2} name="John Michael" email="john@creative-tim.com" />,
+        function: <Job title="Manager" description="Organization" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        employed: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            23/04/18
+          </MDTypography>
+        ),
+        action: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Edit
+          </MDTypography>
+        ),
+      },
+      {
+        author: <Author image={team2} name="John Michael" email="john@creative-tim.com" />,
+        function: <Job title="Manager" description="Organization" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        employed: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            23/04/18
+          </MDTypography>
+        ),
+        action: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Edit
+          </MDTypography>
+        ),
+      },
+      {
+        author: <Author image={team2} name="John Michael" email="john@creative-tim.com" />,
+        function: <Job title="Manager" description="Organization" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        employed: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            23/04/18
+          </MDTypography>
+        ),
+        action: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Edit
+          </MDTypography>
+        ),
+      },
+      {
+        author: <Author image={team2} name="John Michael" email="john@creative-tim.com" />,
+        function: <Job title="Manager" description="Organization" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        employed: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            23/04/18
+          </MDTypography>
+        ),
+        action: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Edit
+          </MDTypography>
+        ),
+      },
+      {
         author: <Author image={team3} name="Alexa Liras" email="alexa@creative-tim.com" />,
         function: <Job title="Programator" description="Developer" />,
         status: (
