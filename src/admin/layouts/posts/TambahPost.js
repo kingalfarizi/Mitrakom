@@ -27,13 +27,66 @@ import DashboardNavbar from "admin/examples/Navbars/DashboardNavbar";
 import Footer from "admin/examples/Footer";
 import { useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { Button } from "@mui/material";
+import { Button, CircularProgress, TextField } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
+
+const postData = async (data) => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/posts`, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  const hasil = response.json();
+  return hasil;
+};
 
 function TambahPost() {
-  const [value, setValue] = useState("<p>Silakan menambahkan post baru</p>");
+  const [value, setValue] = useState("<p>...</p>");
   const [text, setText] = useState("");
 
-  console.log(process.env.REACT_APP_TINYMCE);
+  const [data, setData] = useState({
+    judul: "",
+    penulis: "",
+    body: "",
+    image: "",
+  });
+
+  const handleOnChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: postData,
+  });
+
+  const handleSubmit = async () => {
+    // console.log(data);
+
+    // cek jika ada salah satu di data yang kosong
+    for (const key in data) {
+      if (data[key] === "") {
+        alert("Tolong lengkapi semua data");
+        return;
+      }
+    }
+
+    mutate(data, {
+      onSuccess: async () => {
+        alert("Data berhasil disimpan");
+      },
+      onError: (error) => {
+        alert("terdapat error: " + error);
+      },
+    });
+  };
+
+  // console.log(process.env.REACT_APP_TINYMCE);
 
   return (
     <DashboardLayout>
@@ -57,6 +110,29 @@ function TambahPost() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3} style={{ padding: 15 }}>
+                <label htmlFor="barang">Judul Post</label>
+
+                <TextField
+                  id="judul"
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  name="judul"
+                  onChange={handleOnChange}
+                />
+                <label htmlFor="barang">Penulis Post</label>
+
+                <TextField
+                  id="penulis"
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  name="penulis"
+                  onChange={handleOnChange}
+                />
+
+                <label htmlFor="barang">Isi Post</label>
+
                 <Editor
                   apiKey={process.env.REACT_APP_TINYMCE}
                   value={value}
@@ -65,7 +141,11 @@ function TambahPost() {
                   }}
                   onEditorChange={(newValue, editor) => {
                     setValue(newValue);
-                    setText(editor.getContent({ format: "html" }));
+                    // setText(editor.getContent({ format: "html" }));
+                    setData({
+                      ...data,
+                      body: editor.getContent({ format: "html" }),
+                    });
                   }}
                   init={{
                     height: 400,
@@ -79,9 +159,18 @@ function TambahPost() {
                   }}
                 />
                 {/* <pre>{text}</pre> */}
-                <Button variant="contained" style={{color:'white'}} color="primary">
+                <Button
+                  variant="contained"
+                  style={{ color: "white" }}
+                  color="primary"
+                  onClick={handleSubmit}
+                  disabled={isPending}
+                >
                   Simpan
                 </Button>
+
+                {/* {isSuccess && alert("Data berhasil disimpan")} */}
+                {isPending && <CircularProgress />}
               </MDBox>
             </Card>
           </Grid>
