@@ -29,11 +29,11 @@ import { useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Button } from "@mui/material";
 
-function DetailPost() {
-  const [value, setValue] = useState("<p>Edit Post ini</p>");
+function TambahPost() {
+  const [value, setValue] = useState("<p>Silakan menambahkan post baru</p>");
   const [text, setText] = useState("");
 
-  // console.log(process.env.REACT_APP_TINYMCE);
+  console.log(process.env.REACT_APP_TINYMCE);
 
   return (
     <DashboardLayout>
@@ -53,7 +53,7 @@ function DetailPost() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Edit posts
+                  Tambah posts
                 </MDTypography>
               </MDBox>
               <MDBox pt={3} style={{ padding: 15 }}>
@@ -92,4 +92,4 @@ function DetailPost() {
   );
 }
 
-export default DetailPost;
+export default TambahPost;

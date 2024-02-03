@@ -51,6 +51,7 @@ function App() {
       setCurrentUser(body.data[0]);
       const jsonUser = JSON.stringify(body.data[0]);
       sessionStorage.setItem("currentUser", jsonUser);
+      sessionStorage.setItem("role", body.data[0].role);
       if (response.status === 200) {
         return true;
       }

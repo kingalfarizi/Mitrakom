@@ -30,6 +30,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import { Button } from "@mui/material";
 import DataTable from "admin/examples/Tables/DataTable";
 import postData from "admin/layouts/posts/data/postData";
+import { Link } from "react-router-dom";
 
 function Tables() {
   const [value, setValue] = useState("<p>Silakan menambahkan post baru</p>");
@@ -55,10 +56,18 @@ function Tables() {
                 bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
               >
                 <MDTypography variant="h6" color="white">
-                  Tambah posts
+                  Data posts
                 </MDTypography>
+                <Link to={"add"}>
+                  <Button variant="contained" style={{ color: "white" }}>
+                    Tambah Post
+                  </Button>
+                </Link>
               </MDBox>
               <MDBox pt={3}>
                 <DataTable

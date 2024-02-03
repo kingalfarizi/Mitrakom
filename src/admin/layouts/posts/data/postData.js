@@ -100,7 +100,7 @@ export default function data() {
         action: (
           <MDTypography
             component="a"
-            href="/admin/posts/123"
+            href="/admin/post/123"
             variant="caption"
             color="text"
             fontWeight="medium"

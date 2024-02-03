@@ -60,6 +60,7 @@ import DetailBarang from "./layouts/barang/DetailBarang";
 import DetailPost from "./layouts/posts/DetailPost";
 import TambahBarang from "./layouts/barang/TambahBarang";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import TambahPost from "./layouts/posts/TambahPost";
 
 const queryClient = new QueryClient();
 
@@ -221,7 +222,8 @@ export default function App() {
           <Route path="*" element={<Navigate to="/admin/dashboard" />} />
           <Route path="/admin/barang/add" element={<TambahBarang />} />
           <Route path="/admin/barang/:id" element={<DetailBarang />} />
-          <Route path="/admin/posts/:id" element={<DetailPost />} />
+          <Route path="/admin/post/:id" element={<DetailPost />} />
+          <Route path="/admin/post/add" element={<TambahPost />} />
         </Routes>
       </ThemeProvider>
     </QueryClientProvider>
