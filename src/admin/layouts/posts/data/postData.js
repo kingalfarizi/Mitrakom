@@ -24,8 +24,23 @@ import MDBadge from "admin/components/MDBadge";
 // Images
 import team2 from "admin/assets/images/team-2.jpg";
 import MDButton from "admin/components/MDButton";
+import { useQuery } from "@tanstack/react-query";
 
-export default function data() {
+const fetchData = async () => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/posts`);
+  const data = await response.json();
+  return data;
+};
+
+export default function PostData() {
+  const { isLoading, isError, data } = useQuery({
+    queryKey: ["posts"],
+    queryFn: fetchData,
+    refetchIntervalInBackground: 1000,
+  });
+
+  // console.log(data);
+
   const Author = ({ image, name }) => (
     <MDBox
       display="flex"
@@ -42,6 +57,16 @@ export default function data() {
     </MDBox>
   );
 
+  const convertToPlainText = (htmlContent) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlContent, "text/html");
+    const paragraphs = doc.body.querySelectorAll("p");
+
+    return Array.from(paragraphs).map((p, index) => (
+      <p key={index}>{p.innerText}</p>
+    ));
+  };
+
   const Job = ({ title, description }) => (
     <MDBox lineHeight={1} textAlign="left">
       <MDTypography
@@ -51,7 +76,13 @@ export default function data() {
         fontWeight="medium"
         style={{ width: "10rem" }}
       >
-        {description}
+        <div
+        // dangerouslySetInnerHTML={{
+        //   __html: convertToPlainText(description),
+        // }}
+        >
+          {convertToPlainText(description)}
+        </div>
       </MDTypography>
     </MDBox>
   );
@@ -72,75 +103,128 @@ export default function data() {
       { Header: "action", accessor: "action", align: "center" },
     ],
 
-    rows: [
-      {
-        judul: (
-          <Author
-            image={team2}
-            name="Melampaui Batasan: Teknologi Kamera Smartphone Terbaru Mengubah Cara Kita Mengabadikan Momen"
-          />
-        ),
-        deskripsi: (
-          <Job
-            description={potongKalimat(
-              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta nam neque voluptatum eius, est dolorem fuga animi possimus doloribus. Voluptas maiores quos libero natus nemo maxime aspernatur autem iusto voluptate."
-            )}
-          />
-        ),
-        penulis: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-          >
-            Udin
-          </MDTypography>
-        ),
-        action: (
-          <div style={{ display: "flex", gap: 4 }}>
-            <MDButton
-              variant="outlined"
-              color="info"
-              href={`/admin/post/123`}
+    rows: data
+      ? data.data.map((item) => ({
+          judul: <Author image={item.image} name={item.judul} />,
+          deskripsi: <Job description={item.body} />,
+          penulis: (
+            <MDTypography
+              component="a"
+              href="#"
+              variant="caption"
+              color="text"
+              fontWeight="medium"
             >
-              <MDTypography
-                component="a"
-                variant="caption"
-                color="text"
-                fontWeight="medium"
-              >
-                Edit
-              </MDTypography>
-            </MDButton>
-
-            <MDButton
-              variant="outlined"
-              color="error"
-              onClick={() => alert(1)}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                }}
+              {item.penulis}
+            </MDTypography>
+          ),
+          action: (
+            <div style={{ display: "flex", gap: 4 }}>
+              <MDButton
+                variant="outlined"
+                color="info"
+                href={`/admin/post/${item.id}`}
               >
                 <MDTypography
                   component="a"
                   variant="caption"
-                  style={{ color: "red" }}
+                  color="text"
                   fontWeight="medium"
                 >
-                  Delete
+                  Edit
                 </MDTypography>
+              </MDButton>
+
+              <MDButton
+                variant="outlined"
+                color="error"
+                onClick={() => alert(1)}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <MDTypography
+                    component="a"
+                    variant="caption"
+                    style={{ color: "red" }}
+                    fontWeight="medium"
+                  >
+                    Delete
+                  </MDTypography>
+                </div>
+              </MDButton>
+            </div>
+          ),
+        }))
+      : [
+          {
+            judul: <Author image={team2} name="Belum Ada Post" />,
+            deskripsi: (
+              <Job
+                description={potongKalimat(
+                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta nam neque voluptatum eius, est dolorem fuga animi possimus doloribus. Voluptas maiores quos libero natus nemo maxime aspernatur autem iusto voluptate."
+                )}
+              />
+            ),
+            penulis: (
+              <MDTypography
+                component="a"
+                href="#"
+                variant="caption"
+                color="text"
+                fontWeight="medium"
+              >
+                Udin
+              </MDTypography>
+            ),
+            action: (
+              <div style={{ display: "flex", gap: 4 }}>
+                <MDButton
+                  variant="outlined"
+                  color="info"
+                  href={`/admin/post/000`}
+                >
+                  <MDTypography
+                    component="a"
+                    variant="caption"
+                    color="text"
+                    fontWeight="medium"
+                  >
+                    Edit
+                  </MDTypography>
+                </MDButton>
+
+                <MDButton
+                  variant="outlined"
+                  color="error"
+                  onClick={() => alert("tambahkan post")}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <MDTypography
+                      component="a"
+                      variant="caption"
+                      style={{ color: "red" }}
+                      fontWeight="medium"
+                    >
+                      Delete
+                    </MDTypography>
+                  </div>
+                </MDButton>
               </div>
-            </MDButton>
-          </div>
-        ),
-      },
-    ],
+            ),
+          },
+        ],
   };
 }

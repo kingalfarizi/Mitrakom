@@ -27,3 +27,14 @@ export const createPost = (post) => {
     );
   });
 };
+
+export const getAllPosts = () => {
+  return new Promise((resolve, reject) => {
+    const query = "SELECT * FROM posts ORDER BY createdAt DESC";
+
+    sql
+      .execute(query)
+      .then((result) => resolve(result))
+      .catch((err) => reject(err));
+  });
+};

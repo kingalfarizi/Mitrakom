@@ -31,14 +31,17 @@ import { Button } from "@mui/material";
 import DataTable from "admin/examples/Tables/DataTable";
 import postData from "admin/layouts/posts/data/postData";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchData = async () => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/posts`);
+  const data = await response.json();
+  return data;
+};
 
 function Tables() {
-  const [value, setValue] = useState("<p>Silakan menambahkan post baru</p>");
-  const [text, setText] = useState("");
-
   const { columns, rows } = postData();
 
-  console.log(process.env.REACT_APP_TINYMCE);
 
   return (
     <DashboardLayout>

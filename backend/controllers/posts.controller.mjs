@@ -16,3 +16,19 @@ export const createPost = (req, res) => {
       });
     });
 };
+
+export const getAllPosts = (req, res) => {
+  postServices
+    .getAllPosts()
+    .then((data) => {
+      res.status(200).json({
+        message: "All posts",
+        data: data[0],
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: err.message,
+      });
+    });
+};
