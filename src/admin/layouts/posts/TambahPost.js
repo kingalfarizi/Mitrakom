@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -65,6 +50,24 @@ function TambahPost() {
     mutationFn: postData,
   });
 
+  const handleImgUpload = (e) => {
+    const file = e.target.files[0];
+
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      const img = document.getElementById("preview-img");
+      img.src = event.target.result;
+    };
+
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const newImages = reader.result;
+      setData({ ...data, image: newImages });
+      //   console.log({ newImages });
+    };
+  };
+
   const handleSubmit = async () => {
     // console.log(data);
 
@@ -110,6 +113,23 @@ function TambahPost() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3} style={{ padding: 15 }}>
+                <label htmlFor="barang">Image</label>
+                <img
+                  src=""
+                  id="preview-img"
+                  alt="preview"
+                  style={{ width: "15rem" }}
+                />
+                <TextField
+                  required
+                  id="barang"
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  type="file"
+                  onChange={handleImgUpload}
+                />
+
                 <label htmlFor="barang">Judul Post</label>
 
                 <TextField

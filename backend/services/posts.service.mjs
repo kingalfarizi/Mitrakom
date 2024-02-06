@@ -1,22 +1,29 @@
 import { v4 as uuidv4 } from "uuid";
 import sql from "../config/sql.mjs";
+import cloudinary from "../config/cloudinary.mjs";
 
 export const createPost = (post) => {
   return new Promise((resolve, reject) => {
-    const {
-      id = uuidv4(),
-      judul,
-      body,
+    const { id = uuidv4(), judul, body, image, penulis } = post;
+
+    cloudinary.uploader.upload(
       image,
-      penulis,
-    } = post;
+      {
+        folder: "mitrakom",
+      },
+      (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          const query = `INSERT INTO posts (id, judul, body, image, penulis) VALUES (?, ?, ?, ?, ?)`;
+          const params = [id, judul, body, result.secure_url, penulis];
 
-    const query = `INSERT INTO posts (id, judul, body, image, penulis) VALUES (?, ?, ?, ?, ?)`;
-    const params = [id, judul, body, image, penulis];
-
-    sql
-      .execute(query, [...params])
-      .then((result) => resolve(result))
-      .catch((err) => reject(err));
+          sql
+            .execute(query, [...params])
+            .then((result) => resolve(result))
+            .catch((err) => reject(err));
+        }
+      }
+    );
   });
 };
