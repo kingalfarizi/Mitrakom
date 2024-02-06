@@ -38,3 +38,14 @@ export const getAllPosts = () => {
       .catch((err) => reject(err));
   });
 };
+
+export const getPostById = (id) => {
+  return new Promise((resolve, reject) => {
+    const query = "SELECT * FROM posts WHERE id = ? LIMIT 1";
+
+    sql
+      .execute(query, [id])
+      .then((result) => resolve(result[0]))
+      .catch((err) => reject(err));
+  });
+};

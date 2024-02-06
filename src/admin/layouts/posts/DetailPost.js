@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -25,16 +10,55 @@ import MDTypography from "admin/components/MDTypography";
 import DashboardLayout from "admin/examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "admin/examples/Navbars/DashboardNavbar";
 import Footer from "admin/examples/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { Button } from "@mui/material";
+import { Button, CircularProgress, TextField } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchdata = async (id) => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`);
+  const data = await response.json();
+  return data;
+};
 
 function DetailPost() {
-  const [value, setValue] = useState("<p>Edit Post ini</p>");
+  let { id } = useParams();
+  const navigate = useNavigate();
+
+  const { isLoading, isError, data } = useQuery({
+    queryKey: ["product", id],
+    queryFn: () => fetchdata(id),
+    refetchIntervalInBackground: 1000,
+  });
+
+  // console.log(data);
+
+  const [value, setValue] = useState(data?.data.body);
   const [text, setText] = useState("");
+
+  const [post, setPost] = useState({
+    judul: "",
+    penulis: "",
+    body: "",
+    image: "",
+  });
+
+  useEffect(() => {
+    if (!isLoading) {
+      setPost(data.data);
+    }
+  }, [data]);
 
   // console.log(process.env.REACT_APP_TINYMCE);
 
+  const handleOnChange = (e) => {
+    setPost({ ...post, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    console.log(post);
+  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -56,33 +80,87 @@ function DetailPost() {
                   Edit posts
                 </MDTypography>
               </MDBox>
-              <MDBox pt={3} style={{ padding: 15 }}>
-                <Editor
-                  apiKey={process.env.REACT_APP_TINYMCE}
-                  value={value}
-                  onInit={(evt, editor) => {
-                    setText(editor.getContent({ format: "text" }));
-                  }}
-                  onEditorChange={(newValue, editor) => {
-                    setValue(newValue);
-                    setText(editor.getContent({ format: "html" }));
-                  }}
-                  init={{
-                    height: 400,
-                    menubar: false,
-                    plugins:
-                      "mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
-                    toolbar:
-                      "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-                    content_style:
-                      "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-                  }}
-                />
-                {/* <pre>{text}</pre> */}
-                <Button variant="contained" style={{color:'white'}} color="primary">
-                  Simpan
-                </Button>
-              </MDBox>
+
+              {isLoading ? (
+                <CircularProgress color="inherit" />
+              ) : (
+                <MDBox pt={3} style={{ padding: 15 }}>
+                  <label htmlFor="barang">Image</label>
+                  <img
+                    src={post.image}
+                    id="preview-img"
+                    alt="preview"
+                    style={{ width: "15rem" }}
+                  />
+                  <TextField
+                    required
+                    id="barang"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    type="file"
+                    // onChange={handleImgUpload}
+                  />
+
+                  <label htmlFor="barang">Judul Post</label>
+
+                  <TextField
+                    id="judul"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="judul"
+                    value={post.judul}
+                    onChange={handleOnChange}
+                  />
+                  <label htmlFor="barang">Penulis Post</label>
+
+                  <TextField
+                    id="penulis"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="penulis"
+                    value={post.penulis}
+                    onChange={handleOnChange}
+                  />
+
+                  <label htmlFor="barang">Isi Post</label>
+                  <Editor
+                    apiKey={process.env.REACT_APP_TINYMCE}
+                    value={post.body}
+                    onInit={(evt, editor) => {
+                      setText(editor.getContent({ format: "text" }));
+                    }}
+                    onEditorChange={(newValue, editor) => {
+                      setValue(newValue);
+                      setPost({
+                        ...post,
+                        body: editor.getContent({ format: "html" }),
+                      });
+                    }}
+                    init={{
+                      height: 400,
+                      menubar: false,
+                      plugins:
+                        "mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
+                      toolbar:
+                        "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                      content_style:
+                        "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                    }}
+                  />
+                  {/* <pre>{text}</pre> */}
+                  <Button
+                    variant="contained"
+                    style={{ color: "white" }}
+                    color="primary"
+                    onClick={handleSubmit}
+                  >
+                    Simpan
+                  </Button>
+                </MDBox>
+              )}
             </Card>
           </Grid>
         </Grid>
