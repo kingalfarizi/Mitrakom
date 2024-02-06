@@ -49,3 +49,21 @@ export const getPostById = (req, res) => {
       });
     });
 };
+
+export const updatePost = (req, res) => {
+  const { id } = req.params;
+  const post = req.body;
+  postServices
+    .updatePost(id, post)
+    .then((data) => {
+      res.status(200).json({
+        message: "Post updated",
+        data: data,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: err.message,
+      });
+    });
+};

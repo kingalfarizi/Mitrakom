@@ -14,12 +14,28 @@ import { useEffect, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Button, CircularProgress, TextField } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const fetchdata = async (id) => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`);
   const data = await response.json();
   return data;
+};
+
+const updatePost = async (data, id) => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  const hasil = response.json();
+  return hasil;
 };
 
 function DetailPost() {
@@ -38,6 +54,7 @@ function DetailPost() {
   const [text, setText] = useState("");
 
   const [post, setPost] = useState({
+    id: "",
     judul: "",
     penulis: "",
     body: "",
@@ -56,8 +73,43 @@ function DetailPost() {
     setPost({ ...post, [e.target.name]: e.target.value });
   };
 
+  const handleImgUpload = (e) => {
+    const file = e.target.files[0];
+
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      const img = document.getElementById("preview-img");
+      img.src = event.target.result;
+    };
+
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const newImages = reader.result;
+      setPost({ ...post, image: newImages });
+      //   console.log({ newImages });
+    };
+  };
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: "updatePost",
+    mutationFn: () => updatePost(post, id),
+  });
+
   const handleSubmit = async () => {
-    console.log(post);
+    // console.log(barang);
+    mutate(
+      post,
+      {
+        onSuccess: async () => {
+          alert("Data berhasil diubah");
+          navigate("/admin/post");
+        },
+        onError: (error) => {
+          alert("terdapat error: " + error);
+        },
+      }
+    );
   };
   return (
     <DashboardLayout>
@@ -99,7 +151,7 @@ function DetailPost() {
                     margin="normal"
                     fullWidth
                     type="file"
-                    // onChange={handleImgUpload}
+                    onChange={handleImgUpload}
                   />
 
                   <label htmlFor="barang">Judul Post</label>
@@ -156,9 +208,12 @@ function DetailPost() {
                     style={{ color: "white" }}
                     color="primary"
                     onClick={handleSubmit}
+                    disabled={isPending}
                   >
                     Simpan
                   </Button>
+
+                  {isPending && <CircularProgress color="inherit" />}
                 </MDBox>
               )}
             </Card>

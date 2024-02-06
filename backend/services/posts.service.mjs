@@ -49,3 +49,39 @@ export const getPostById = (id) => {
       .catch((err) => reject(err));
   });
 };
+
+export const updatePost = (id, post) => {
+  return new Promise((resolve, reject) => {
+    const { judul, body, image, penulis } = post;
+
+    sql.execute(`SELECT * FROM posts WHERE id = ?`, [id]).then((result) => {
+      if (result[0].image !== image) {
+        cloudinary.uploader.upload(
+          image,
+          {
+            folder: "mitrakom",
+          },
+          (err, result) => {
+            if (err) {
+              reject(err);
+            } else {
+              const query = `UPDATE posts SET judul = ?, body = ?, image = ?, penulis = ? WHERE id = ?`;
+              const params = [judul, body, result.secure_url, penulis, id];
+              sql
+                .execute(query, [...params])
+                .then((result) => resolve(result))
+                .catch((err) => reject(err));
+            }
+          }
+        );
+      } else {
+        const query = `UPDATE posts SET judul = ?, body = ?, penulis = ? WHERE id = ?`;
+        const params = [judul, body, penulis, id];
+        sql
+          .execute(query, [...params])
+          .then((result) => resolve(result))
+          .catch((err) => reject(err));
+      }
+    });
+  });
+};
