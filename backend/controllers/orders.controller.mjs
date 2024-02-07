@@ -33,3 +33,19 @@ export const getOrderByUserId = (req, res) => {
       });
     });
 };
+
+export const getAllOrders = (req, res) => {
+  orderServices
+    .getAllOrders()
+    .then((data) => {
+      res.status(200).json({
+        message: "All orders",
+        data: data[0],
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: err.message,
+      });
+    });
+};

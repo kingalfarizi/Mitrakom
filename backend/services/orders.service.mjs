@@ -161,7 +161,6 @@ const midtransTransaction = async (transactionData) => {
   }
 };
 
-// BELUM FINISH
 export const getOrderByUserId = (userId) => {
   return new Promise((resolve, reject) => {
     const query = `
@@ -170,6 +169,7 @@ export const getOrderByUserId = (userId) => {
       FROM orders
       JOIN orderDetails ON orders.id = orderDetails.idOrder
       JOIN barangs ON orderDetails.idBarang = barangs.id
+      JOIN users ON orders.idUser = users.id
       WHERE orders.idUser = ?
     `;
 
@@ -180,6 +180,30 @@ export const getOrderByUserId = (userId) => {
       })
       .catch((error) => {
         console.error("Error fetching orders by user ID:", error);
+        reject(error);
+      });
+  });
+};
+
+export const getAllOrders = () => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT orders.id, orders.idUser, users.fullname, IFNULL(users.address, '-') as userAddress, orders.metodePengiriman, orders.metodePembayaran, orders.idCard, orders.promoCode, orders.subTotal, orders.statusOrder,
+      orderDetails.idBarang, orderDetails.kuantitas, barangs.ItemName, barangs.ItemImg, orderDetails.totalHarga
+      FROM orders
+      JOIN orderDetails ON orders.id = orderDetails.idOrder
+      JOIN barangs ON orderDetails.idBarang = barangs.id
+      JOIN users ON orders.idUser = users.id
+      ORDER BY orders.createdAt DESC
+    `;
+
+    sql
+      .execute(query)
+      .then((result) => {
+        resolve(result[0]); // Assuming result is an array of orders
+      })
+      .catch((error) => {
+        console.error("Error fetching all orders:", error);
         reject(error);
       });
   });
