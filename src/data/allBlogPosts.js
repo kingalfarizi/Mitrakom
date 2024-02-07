@@ -12,8 +12,7 @@ const allBlogPosts = [
       "Mempersingkat waktu charging dengan menggunakan kabel dari ANKER, dilengkapi dengan menggunakan bahan bradied nylon untuk daya tahan maksimum.",
     author: "Krisna Abdi",
     id: 1,
-    content:
-      `Kabel pengisian adalah salah satu aksesori ponsel yang mungkin sering terabaikan, tetapi memiliki peran penting dalam pengalaman penggunaan perangkat elektronik kita sehari-hari. Anker, salah satu produsen perangkat aksesori ponsel terkemuka, telah lama dikenal dengan produk-produk berkualitas tinggi dan inovatif. Salah satu inovasi terbaru mereka adalah kabel kilat untuk pengisian cepat.
+    content: `Kabel pengisian adalah salah satu aksesori ponsel yang mungkin sering terabaikan, tetapi memiliki peran penting dalam pengalaman penggunaan perangkat elektronik kita sehari-hari. Anker, salah satu produsen perangkat aksesori ponsel terkemuka, telah lama dikenal dengan produk-produk berkualitas tinggi dan inovatif. Salah satu inovasi terbaru mereka adalah kabel kilat untuk pengisian cepat.
 
       Kabel kilat Anker dirancang untuk memberikan pengisian daya yang lebih cepat dan efisien, sehingga Anda dapat mengisi daya perangkat Anda dengan lebih cepat daripada sebelumnya. Berikut beberapa hal penting yang perlu Anda ketahui tentang kabel kilat Anker:
       
@@ -38,13 +37,12 @@ const allBlogPosts = [
       Selain fungsional, kabel kilat Anker juga memiliki desain yang stylish. Anda dapat menemukan berbagai pilihan warna dan gaya kabel yang sesuai dengan gaya Anda. Ini membuat kabel ini tidak hanya berfungsi sebagai alat pengisian, tetapi juga sebagai aksesori gaya yang sesuai dengan gaya hidup Anda.
       
       Kabel kilat Anker adalah solusi sempurna untuk mereka yang menghargai kecepatan pengisian, kompatibilitas, daya tahan, dan desain. Dengan produk-produk berkualitas tinggi seperti ini, Anker terus membuktikan diri sebagai pemimpin dalam industri aksesori ponsel. Jadi, jika Anda mencari cara untuk mengisi daya perangkat Anda dengan cepat dan efisien, pertimbangkan untuk mengambil salah satu kabel kilat Anker ini.
-      `
+      `,
   },
 
   {
     img: Img2,
-    name:
-      "Memaksimalkan Performa Gaming Anda dengan Mouse Gaming Logitech Terbaru",
+    name: "Memaksimalkan Performa Gaming Anda dengan Mouse Gaming Logitech Terbaru",
     intro:
       "Mouse adalah alat paling penting untuk membuat kamu merasakan ikatan kepada device.",
     author: "Surhes Anggrhesta",
@@ -75,13 +73,12 @@ const allBlogPosts = [
     
     Logitech menawarkan berbagai model mouse gaming, yang cocok untuk berbagai gaya permainan. Apakah Anda adalah pemain FPS yang memerlukan ketepatan atau pemain MMO yang membutuhkan banyak tombol makro, Logitech memiliki pilihan yang sesuai dengan Anda.
     
-    Mouse gaming Logitech telah menjadi pilihan favorit para pemain di seluruh dunia, dan dengan inovasi terbaru mereka, mereka terus memimpin dalam industri perangkat gaming. Dengan mouse gaming Logitech, Anda dapat menghadirkan permainan Anda ke tingkat berikutnya, memaksimalkan performa Anda, dan meraih kemenangan yang lebih banyak dalam setiap pertandingan.`
+    Mouse gaming Logitech telah menjadi pilihan favorit para pemain di seluruh dunia, dan dengan inovasi terbaru mereka, mereka terus memimpin dalam industri perangkat gaming. Dengan mouse gaming Logitech, Anda dapat menghadirkan permainan Anda ke tingkat berikutnya, memaksimalkan performa Anda, dan meraih kemenangan yang lebih banyak dalam setiap pertandingan.`,
   },
   {
     img: Img3,
     name: "Menggali Kekuatan Terbaru: Processor AMD Terbaru Melampaui Harapan",
-    intro:
-      "Sebuah monster dari AMD untuk melibas semua kegiatanmu.",
+    intro: "Sebuah monster dari AMD untuk melibas semua kegiatanmu.",
     author: "Azzam Purnama",
     id: 3,
     content: `AMD (Advanced Micro Devices) adalah salah satu pemimpin dalam industri pengolahan data komputer dan perangkat keras, yang selalu menghadirkan inovasi-inovasi terbaru dalam dunia teknologi. Dengan luncuran produk terbarunya, AMD telah memperlihatkan dedikasi mereka untuk terus memajukan dunia komputasi. Artikel ini akan membahas beberapa processor AMD terbaru dan teknologi terkini yang mengiringinya.
@@ -106,7 +103,7 @@ const allBlogPosts = [
     
     Dalam dunia yang semakin terhubung, konektivitas yang cepat adalah kunci. Processor AMD terbaru mendukung PCIe 4.0, yang memungkinkan transfer data yang lebih cepat dan peningkatan kemampuan GPU, storage, dan periferal. Ini sangat bermanfaat bagi mereka yang memerlukan performa tinggi dalam tugas yang melibatkan transfer data besar, seperti editing video dan rendering.
     
-    AMD terus menghadirkan inovasi yang mengesankan dalam dunia processor komputer. Dengan seri terbarunya, AMD Ryzen 5000 dan EPYC Milan, mereka telah melampaui harapan dengan arsitektur Zen 3 yang luar biasa, performa gaming yang hebat, dan kemampuan untuk memenuhi tuntutan data center yang semakin kompleks. Ini adalah bukti bahwa AMD tetap menjadi pemain utama dalam industri pengolahan data komputer dan terus menggerakkan inovasi di masa depan.\n`
+    AMD terus menghadirkan inovasi yang mengesankan dalam dunia processor komputer. Dengan seri terbarunya, AMD Ryzen 5000 dan EPYC Milan, mereka telah melampaui harapan dengan arsitektur Zen 3 yang luar biasa, performa gaming yang hebat, dan kemampuan untuk memenuhi tuntutan data center yang semakin kompleks. Ini adalah bukti bahwa AMD tetap menjadi pemain utama dalam industri pengolahan data komputer dan terus menggerakkan inovasi di masa depan.\n`,
   },
   {
     img: Img4,
@@ -153,7 +150,7 @@ const allBlogPosts = [
     
     Sandi yang Kuat: Gunakan kata sandi yang kuat dan tidak mudah ditebak untuk mengamankan perangkat Anda.
     
-    Virus pada smartphone adalah ancaman serius yang dapat mengakibatkan kerugian data dan kerentanan keamanan pribadi. Dengan mengikuti praktik keamanan sederhana dan berhati-hati, Anda dapat melindungi perangkat Anda dari serangan semacam ini. Kesadaran dan tindakan preventif adalah kunci untuk menjaga smartphone Anda tetap aman dan berkinerja baik.`
+    Virus pada smartphone adalah ancaman serius yang dapat mengakibatkan kerugian data dan kerentanan keamanan pribadi. Dengan mengikuti praktik keamanan sederhana dan berhati-hati, Anda dapat melindungi perangkat Anda dari serangan semacam ini. Kesadaran dan tindakan preventif adalah kunci untuk menjaga smartphone Anda tetap aman dan berkinerja baik.`,
   },
   {
     img: Img5,
@@ -197,9 +194,17 @@ const allBlogPosts = [
     
     
     
-    `
+    `,
   },
-
+  {
+    img: "https://fastly.picsum.photos/id/999/1280/700.jpg?hmac=JTpilb3_Tev1uNkYigvakSPQwvfuw-HmyiUAE5mc5mw",
+    name: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore commodi laudantium, a corporis placeat maiores nihil illo perferendis dicta quo",
+    intro:
+      "Kamera menjadi teknologi paling berharga untuk membuat momen yang sudah kita alami.",
+    author: "Krisna Abdi",
+    id: 5,
+    content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore commodi laudantium, a corporis placeat maiores nihil illo perferendis dicta quo molestias, asperiores officiis saepe distinctio blanditiis sapiente quisquam nesciunt. Delectus.`,
+  },
 ];
 
 export default allBlogPosts;

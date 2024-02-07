@@ -11,21 +11,21 @@ import BlogPosts from "./BlogPosts";
 
 const Blog = () => {
   const [itemOffset, setItemOffset] = useState(0);
-  const [endOffset, setEndOffset] = useState(itemOffset + 5);
+  const [endOffset, setEndOffset] = useState(itemOffset + 6);
   const [currentBlogPosts, setcurrentBlogPosts] = useState([...allBlogPosts].reverse().slice(itemOffset, endOffset));
-  const [pageCountPosts, setpageCountPosts] = useState(Math.ceil(allBlogPosts.length / 5));
+  const [pageCountPosts, setpageCountPosts] = useState(Math.ceil(allBlogPosts.length / 6));
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * 5) % allBlogPosts.length;
+    const newOffset = (event.selected * 6) % allBlogPosts.length;
     setItemOffset(newOffset);
     ResetLocation();
   };
 
   useEffect(() => {
     document.title = "Blog Mitrakom";
-    setEndOffset(itemOffset + 5);
+    setEndOffset(itemOffset + 6);
     setcurrentBlogPosts([...allBlogPosts].reverse().slice(itemOffset, endOffset));
-    setpageCountPosts(Math.ceil(allBlogPosts.length / 5));
+    setpageCountPosts(Math.ceil(allBlogPosts.length / 6));
 
   }, [setEndOffset, endOffset, itemOffset]);
   return (

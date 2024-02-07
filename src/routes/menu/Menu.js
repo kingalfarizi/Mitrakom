@@ -17,24 +17,24 @@ const Menu = ({ allProducts,
 }) => {
 
   const [itemOffset, setItemOffset] = useState(0);
-  const [endOffset, setEndOffset] = useState(itemOffset + 5);
+  const [endOffset, setEndOffset] = useState(itemOffset + 6);
   const [currentProducts, setcurrentProducts] = useState([...allProducts].reverse().slice(itemOffset, endOffset));
-  const [pageCountProducts, setpageCountProducts] = useState(Math.ceil(allProducts.length / 5));
+  const [pageCountProducts, setpageCountProducts] = useState(Math.ceil(allProducts.length / 6));
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * 5) % allProducts.length;
+    const newOffset = (event.selected * 6) % allProducts.length;
     setItemOffset(newOffset);
     ResetLocation();
   };
   const resetPagination = () => {
     setItemOffset(0);
-    setEndOffset(5);
+    setEndOffset(6);
   }
   useEffect(() => {
     document.title = `${activeCategory}`;
-    setEndOffset(itemOffset + 5);
+    setEndOffset(itemOffset + 6);
     setcurrentProducts([...allProducts].reverse().slice(itemOffset, endOffset));
-    setpageCountProducts(Math.ceil(allProducts.length / 5));
+    setpageCountProducts(Math.ceil(allProducts.length / 6));
 
   }, [allProducts, setEndOffset, endOffset, itemOffset, activeCategory]);
   return (
