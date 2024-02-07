@@ -14,6 +14,7 @@ import { useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Button, CircularProgress, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 const postData = async (data) => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/posts`, {
@@ -68,6 +69,8 @@ function TambahPost() {
     };
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = async () => {
     // console.log(data);
 
@@ -82,6 +85,7 @@ function TambahPost() {
     mutate(data, {
       onSuccess: async () => {
         alert("Data berhasil disimpan");
+        navigate("/admin/post");
       },
       onError: (error) => {
         alert("terdapat error: " + error);

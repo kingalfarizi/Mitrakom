@@ -85,3 +85,13 @@ export const updatePost = (id, post) => {
     });
   });
 };
+
+export const deletePost = (id) => {
+  return new Promise((resolve, reject) => {
+    const query = "DELETE FROM posts WHERE id = ?";
+    sql
+      .execute(query, [id])
+      .then((result) => resolve(result))
+      .catch((err) => reject(err));
+  });
+}

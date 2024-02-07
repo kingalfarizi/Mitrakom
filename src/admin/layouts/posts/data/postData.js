@@ -41,6 +41,26 @@ export default function PostData() {
 
   // console.log(data);
 
+  const deleteData = async (id) => {
+    const konfirmasi = window.confirm(
+      "Apakah anda yakin ingin menghapus data ini?"
+    );
+
+    if (!konfirmasi) return;
+
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/posts/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
+    const data = await response.json();
+    if (data) {
+      alert("Data berhasil dihapus");
+      window.location.reload();
+    }
+  };
+
   const Author = ({ image, name }) => (
     <MDBox
       display="flex"
@@ -106,7 +126,7 @@ export default function PostData() {
     rows: data
       ? data.data.map((item) => ({
           judul: <Author image={item.image} name={item.judul} />,
-          deskripsi: <Job description={item.body} />,
+          deskripsi: <Job description={potongKalimat(item.body)} />,
           penulis: (
             <MDTypography
               component="a"
@@ -138,7 +158,7 @@ export default function PostData() {
               <MDButton
                 variant="outlined"
                 color="error"
-                onClick={() => alert(1)}
+                onClick={() => deleteData(item.id)}
               >
                 <div
                   style={{
