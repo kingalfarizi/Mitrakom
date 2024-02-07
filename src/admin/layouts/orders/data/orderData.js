@@ -25,21 +25,22 @@ import MDBadge from "admin/components/MDBadge";
 import team2 from "admin/assets/images/team-2.jpg";
 import MDButton from "admin/components/MDButton";
 import { useQuery } from "@tanstack/react-query";
+import rupiah from "helpers/rupiah";
 
 const fetchData = async () => {
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/posts`);
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/orders`);
   const data = await response.json();
   return data;
 };
 
 export default function PostData() {
   const { isLoading, isError, data } = useQuery({
-    queryKey: ["posts"],
+    queryKey: ["orders"],
     queryFn: fetchData,
     refetchIntervalInBackground: 1000,
   });
 
-  // console.log(data);
+  console.log(data);
 
   const deleteData = async (id) => {
     const konfirmasi = window.confirm(
@@ -49,7 +50,7 @@ export default function PostData() {
     if (!konfirmasi) return;
 
     const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/posts/${id}`,
+      `${process.env.REACT_APP_API_URL}/orders/${id}`,
       {
         method: "DELETE",
       }
@@ -66,7 +67,7 @@ export default function PostData() {
       display="flex"
       alignItems="center"
       lineHeight={1}
-      style={{ width: "13rem" }}
+      // style={{ width: "13rem" }}
     >
       <MDAvatar src={image} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
@@ -96,13 +97,7 @@ export default function PostData() {
         fontWeight="medium"
         style={{ width: "10rem" }}
       >
-        <div
-        // dangerouslySetInnerHTML={{
-        //   __html: convertToPlainText(description),
-        // }}
-        >
-          {convertToPlainText(description)}
-        </div>
+        <div>{description}</div>
       </MDTypography>
     </MDBox>
   );
@@ -113,21 +108,19 @@ export default function PostData() {
 
   return {
     columns: [
-      { Header: "Judul Post", accessor: "judul", align: "left" },
-      {
-        Header: "Isi Post",
-        accessor: "deskripsi",
-        align: "left",
-      },
-      { Header: "nama penulis", accessor: "penulis", align: "center" },
+      { Header: "Barang", accessor: "barang", align: "left" },
+      { Header: "Pembeli", accessor: "pembeli", align: "center" },
+      { Header: "Kuantitas", accessor: "jumlah", align: "center" },
+      { Header: "Metode Pengiriman", accessor: "metode", align: "center" },
+      { Header: "Status", accessor: "status", align: "center" },
+      { Header: "Total Harga", accessor: "harga", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
 
     rows: data
       ? data.data.map((item) => ({
-          judul: <Author image={item.image} name={item.judul} />,
-          deskripsi: <Job description={potongKalimat(item.body)} />,
-          penulis: (
+          barang: <Author image={item.ItemImg} name={item.ItemName} />,
+          pembeli: (
             <MDTypography
               component="a"
               href="#"
@@ -135,7 +128,51 @@ export default function PostData() {
               color="text"
               fontWeight="medium"
             >
-              {item.penulis}
+              {item.fullname}
+            </MDTypography>
+          ),
+          jumlah: (
+            <MDTypography
+              component="a"
+              href="#"
+              variant="caption"
+              color="text"
+              fontWeight="medium"
+            >
+              {item.kuantitas}
+            </MDTypography>
+          ),
+          metode: (
+            <MDTypography
+              component="a"
+              href="#"
+              variant="caption"
+              color="text"
+              fontWeight="medium"
+            >
+              {item.metodePengiriman}
+            </MDTypography>
+          ),
+          status: (
+            <MDTypography
+              component="a"
+              href="#"
+              variant="caption"
+              color="text"
+              fontWeight="medium"
+            >
+              {item.statusOrder}
+            </MDTypography>
+          ),
+          harga: (
+            <MDTypography
+              component="a"
+              href="#"
+              variant="caption"
+              color="text"
+              fontWeight="medium"
+            >
+              {rupiah(item.subTotal)}
             </MDTypography>
           ),
           action: (
@@ -143,7 +180,7 @@ export default function PostData() {
               <MDButton
                 variant="outlined"
                 color="info"
-                href={`/admin/post/${item.id}`}
+                href={`/admin/order/000`}
               >
                 <MDTypography
                   component="a"
@@ -154,44 +191,13 @@ export default function PostData() {
                   Edit
                 </MDTypography>
               </MDButton>
-
-              <MDButton
-                variant="outlined"
-                color="error"
-                onClick={() => deleteData(item.id)}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                  }}
-                >
-                  <MDTypography
-                    component="a"
-                    variant="caption"
-                    style={{ color: "red" }}
-                    fontWeight="medium"
-                  >
-                    Delete
-                  </MDTypography>
-                </div>
-              </MDButton>
             </div>
           ),
         }))
       : [
           {
-            judul: <Author image={team2} name="Belum Ada Post" />,
-            deskripsi: (
-              <Job
-                description={potongKalimat(
-                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta nam neque voluptatum eius, est dolorem fuga animi possimus doloribus. Voluptas maiores quos libero natus nemo maxime aspernatur autem iusto voluptate."
-                )}
-              />
-            ),
-            penulis: (
+            barang: <Author image={team2} name="barang" />,
+            pembeli: (
               <MDTypography
                 component="a"
                 href="#"
@@ -202,12 +208,56 @@ export default function PostData() {
                 Udin
               </MDTypography>
             ),
+            jumlah: (
+              <MDTypography
+                component="a"
+                href="#"
+                variant="caption"
+                color="text"
+                fontWeight="medium"
+              >
+                123
+              </MDTypography>
+            ),
+            metode: (
+              <MDTypography
+                component="a"
+                href="#"
+                variant="caption"
+                color="text"
+                fontWeight="medium"
+              >
+                delivery
+              </MDTypography>
+            ),
+            status: (
+              <MDTypography
+                component="a"
+                href="#"
+                variant="caption"
+                color="text"
+                fontWeight="medium"
+              >
+                Pending
+              </MDTypography>
+            ),
+            harga: (
+              <MDTypography
+                component="a"
+                href="#"
+                variant="caption"
+                color="text"
+                fontWeight="medium"
+              >
+                {rupiah(100000)}
+              </MDTypography>
+            ),
             action: (
               <div style={{ display: "flex", gap: 4 }}>
                 <MDButton
                   variant="outlined"
                   color="info"
-                  href={`/admin/post/000`}
+                  href={`/admin/order/000`}
                 >
                   <MDTypography
                     component="a"
@@ -217,30 +267,6 @@ export default function PostData() {
                   >
                     Edit
                   </MDTypography>
-                </MDButton>
-
-                <MDButton
-                  variant="outlined"
-                  color="error"
-                  onClick={() => alert("tambahkan post")}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <MDTypography
-                      component="a"
-                      variant="caption"
-                      style={{ color: "red" }}
-                      fontWeight="medium"
-                    >
-                      Delete
-                    </MDTypography>
-                  </div>
                 </MDButton>
               </div>
             ),

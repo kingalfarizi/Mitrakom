@@ -25,22 +25,12 @@ import MDTypography from "admin/components/MDTypography";
 import DashboardLayout from "admin/examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "admin/examples/Navbars/DashboardNavbar";
 import Footer from "admin/examples/Footer";
-import { useState } from "react";
-import { Editor } from "@tinymce/tinymce-react";
-import { Button } from "@mui/material";
 import DataTable from "admin/examples/Tables/DataTable";
-import postData from "admin/layouts/posts/data/postData";
-import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import orderData from "admin/layouts/orders/data/orderData";
 
-const fetchData = async () => {
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/posts`);
-  const data = await response.json();
-  return data;
-};
 
 function Tables() {
-  const { columns, rows } = postData();
+  const { columns, rows } = orderData();
 
 
   return (

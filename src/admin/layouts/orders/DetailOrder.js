@@ -11,7 +11,6 @@ import DashboardLayout from "admin/examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "admin/examples/Navbars/DashboardNavbar";
 import Footer from "admin/examples/Footer";
 import { useEffect, useState } from "react";
-import { Editor } from "@tinymce/tinymce-react";
 import { Button, CircularProgress, TextField } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -38,20 +37,16 @@ const updatePost = async (data, id) => {
   return hasil;
 };
 
-function DetailPost() {
+function DetailOrder() {
   let { id } = useParams();
   const navigate = useNavigate();
 
   const { isLoading, isError, data } = useQuery({
-    queryKey: ["product", id],
+    queryKey: ["order", id],
     queryFn: () => fetchdata(id),
     refetchIntervalInBackground: 1000,
   });
 
-  // console.log(data);
-
-  const [value, setValue] = useState(data?.data.body);
-  const [text, setText] = useState("");
 
   const [post, setPost] = useState({
     id: "",
@@ -65,7 +60,7 @@ function DetailPost() {
     if (!isLoading) {
       setPost(data.data);
     }
-  }, [data]);
+  }, [data, isLoading]);
 
   // console.log(process.env.REACT_APP_TINYMCE);
 
@@ -98,18 +93,15 @@ function DetailPost() {
 
   const handleSubmit = async () => {
     // console.log(barang);
-    mutate(
-      post,
-      {
-        onSuccess: async () => {
-          alert("Data berhasil diubah");
-          navigate("/admin/post");
-        },
-        onError: (error) => {
-          alert("terdapat error: " + error);
-        },
-      }
-    );
+    mutate(post, {
+      onSuccess: async () => {
+        alert("Data berhasil diubah");
+        navigate("/admin/post");
+      },
+      onError: (error) => {
+        alert("terdapat error: " + error);
+      },
+    });
   };
   return (
     <DashboardLayout>
@@ -129,7 +121,7 @@ function DetailPost() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Edit posts
+                  Edit Order
                 </MDTypography>
               </MDBox>
 
@@ -177,32 +169,6 @@ function DetailPost() {
                     onChange={handleOnChange}
                   />
 
-                  <label htmlFor="barang">Isi Post</label>
-                  <Editor
-                    apiKey={process.env.REACT_APP_TINYMCE}
-                    value={post.body}
-                    onInit={(evt, editor) => {
-                      setText(editor.getContent({ format: "text" }));
-                    }}
-                    onEditorChange={(newValue, editor) => {
-                      setValue(newValue);
-                      setPost({
-                        ...post,
-                        body: editor.getContent({ format: "html" }),
-                      });
-                    }}
-                    init={{
-                      height: 400,
-                      menubar: false,
-                      plugins:
-                        "mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
-                      toolbar:
-                        "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-                      content_style:
-                        "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-                    }}
-                  />
-                  {/* <pre>{text}</pre> */}
                   <Button
                     variant="contained"
                     style={{ color: "white" }}
@@ -225,4 +191,4 @@ function DetailPost() {
   );
 }
 
-export default DetailPost;
+export default DetailOrder;

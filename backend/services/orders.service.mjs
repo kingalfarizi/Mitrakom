@@ -208,3 +208,28 @@ export const getAllOrders = () => {
       });
   });
 };
+
+export const getOrderById = (orderId) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT orders.id, orders.idUser, users.fullname, IFNULL(users.address, '-') as userAddress, orders.metodePengiriman, orders.metodePembayaran, orders.idCard, orders.promoCode, orders.subTotal, orders.statusOrder,
+      orderDetails.idBarang, orderDetails.kuantitas, barangs.ItemName, barangs.ItemImg, orderDetails.totalHarga
+      FROM orders
+      JOIN orderDetails ON orders.id = orderDetails.idOrder
+      JOIN barangs ON orderDetails.idBarang = barangs.id
+      JOIN users ON orders.idUser = users.id
+      WHERE orders.id = ?
+      LIMIT 1
+    `;
+
+    sql
+      .execute(query, [orderId])
+      .then((result) => {
+        resolve(result[0]); // Assuming result is an array of orders
+      })
+      .catch((error) => {
+        console.error("Error fetching order by ID:", error);
+        reject(error);
+      });
+  });
+};
