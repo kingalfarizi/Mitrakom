@@ -39,7 +39,7 @@ export default function PostData() {
     refetchIntervalInBackground: 1000,
   });
 
-  // console.log(data);
+  console.log(data);
 
   const deleteData = async (id) => {
     const konfirmasi = window.confirm(

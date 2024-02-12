@@ -118,85 +118,9 @@ export default function PostData() {
     ],
 
     rows: data
-      ? data.data.map((item) => ({
-          barang: <Author image={item.ItemImg} name={item.ItemName} />,
-          pembeli: (
-            <MDTypography
-              component="a"
-              href="#"
-              variant="caption"
-              color="text"
-              fontWeight="medium"
-            >
-              {item.fullname}
-            </MDTypography>
-          ),
-          jumlah: (
-            <MDTypography
-              component="a"
-              href="#"
-              variant="caption"
-              color="text"
-              fontWeight="medium"
-            >
-              {item.kuantitas}
-            </MDTypography>
-          ),
-          metode: (
-            <MDTypography
-              component="a"
-              href="#"
-              variant="caption"
-              color="text"
-              fontWeight="medium"
-            >
-              {item.metodePengiriman}
-            </MDTypography>
-          ),
-          status: (
-            <MDTypography
-              component="a"
-              href="#"
-              variant="caption"
-              color="text"
-              fontWeight="medium"
-            >
-              {item.statusOrder}
-            </MDTypography>
-          ),
-          harga: (
-            <MDTypography
-              component="a"
-              href="#"
-              variant="caption"
-              color="text"
-              fontWeight="medium"
-            >
-              {rupiah(item.subTotal)}
-            </MDTypography>
-          ),
-          action: (
-            <div style={{ display: "flex", gap: 4 }}>
-              <MDButton
-                variant="outlined"
-                color="info"
-                href={`/admin/order/${item.id}`}
-              >
-                <MDTypography
-                  component="a"
-                  variant="caption"
-                  color="text"
-                  fontWeight="medium"
-                >
-                  Edit
-                </MDTypography>
-              </MDButton>
-            </div>
-          ),
-        }))
-      : [
-          {
-            barang: <Author image={team2} name="barang" />,
+      ? data.data.length > 0
+        ? data.data.map((item) => ({
+            barang: <Author image={item.ItemImg} name={item.ItemName} />,
             pembeli: (
               <MDTypography
                 component="a"
@@ -205,7 +129,7 @@ export default function PostData() {
                 color="text"
                 fontWeight="medium"
               >
-                Udin
+                {item.fullname}
               </MDTypography>
             ),
             jumlah: (
@@ -216,7 +140,7 @@ export default function PostData() {
                 color="text"
                 fontWeight="medium"
               >
-                123
+                {item.kuantitas}
               </MDTypography>
             ),
             metode: (
@@ -227,7 +151,7 @@ export default function PostData() {
                 color="text"
                 fontWeight="medium"
               >
-                delivery
+                {item.metodePengiriman}
               </MDTypography>
             ),
             status: (
@@ -238,7 +162,7 @@ export default function PostData() {
                 color="text"
                 fontWeight="medium"
               >
-                Pending
+                {item.statusOrder}
               </MDTypography>
             ),
             harga: (
@@ -249,7 +173,162 @@ export default function PostData() {
                 color="text"
                 fontWeight="medium"
               >
-                {rupiah(100000)}
+                {rupiah(item.subTotal)}
+              </MDTypography>
+            ),
+            action: (
+              <div style={{ display: "flex", gap: 4 }}>
+                <MDButton
+                  variant="outlined"
+                  color="info"
+                  href={`/admin/order/${item.id}`}
+                >
+                  <MDTypography
+                    component="a"
+                    variant="caption"
+                    color="text"
+                    fontWeight="medium"
+                  >
+                    Edit
+                  </MDTypography>
+                </MDButton>
+              </div>
+            ),
+          }))
+        : [
+            {
+              barang: <Author image={team2} name={"belum ada orderan"} />,
+              pembeli: (
+                <MDTypography
+                  component="a"
+                  href="#"
+                  variant="caption"
+                  color="text"
+                  fontWeight="medium"
+                >
+                  {"belum ada orderan"}
+                </MDTypography>
+              ),
+              jumlah: (
+                <MDTypography
+                  component="a"
+                  href="#"
+                  variant="caption"
+                  color="text"
+                  fontWeight="medium"
+                >
+                  {"belum ada orderan"}
+                </MDTypography>
+              ),
+              metode: (
+                <MDTypography
+                  component="a"
+                  href="#"
+                  variant="caption"
+                  color="text"
+                  fontWeight="medium"
+                >
+                  {"belum ada orderan"}
+                </MDTypography>
+              ),
+              status: (
+                <MDTypography
+                  component="a"
+                  href="#"
+                  variant="caption"
+                  color="text"
+                  fontWeight="medium"
+                >
+                  {"belum ada orderan"}
+                </MDTypography>
+              ),
+              harga: (
+                <MDTypography
+                  component="a"
+                  href="#"
+                  variant="caption"
+                  color="text"
+                  fontWeight="medium"
+                >
+                  000
+                </MDTypography>
+              ),
+              action: (
+                <div style={{ display: "flex", gap: 4 }}>
+                  <MDButton
+                    variant="outlined"
+                    color="info"
+                    href={`/admin/order/000`}
+                  >
+                    <MDTypography
+                      component="a"
+                      variant="caption"
+                      color="text"
+                      fontWeight="medium"
+                    >
+                      Edit
+                    </MDTypography>
+                  </MDButton>
+                </div>
+              ),
+            },
+          ]
+      : [
+          {
+            barang: <Author image={team2} name={"belum ada orderan"} />,
+            pembeli: (
+              <MDTypography
+                component="a"
+                href="#"
+                variant="caption"
+                color="text"
+                fontWeight="medium"
+              >
+                {"belum ada orderan"}
+              </MDTypography>
+            ),
+            jumlah: (
+              <MDTypography
+                component="a"
+                href="#"
+                variant="caption"
+                color="text"
+                fontWeight="medium"
+              >
+                {"belum ada orderan"}
+              </MDTypography>
+            ),
+            metode: (
+              <MDTypography
+                component="a"
+                href="#"
+                variant="caption"
+                color="text"
+                fontWeight="medium"
+              >
+                {"belum ada orderan"}
+              </MDTypography>
+            ),
+            status: (
+              <MDTypography
+                component="a"
+                href="#"
+                variant="caption"
+                color="text"
+                fontWeight="medium"
+              >
+                {"belum ada orderan"}
+              </MDTypography>
+            ),
+            harga: (
+              <MDTypography
+                component="a"
+                href="#"
+                variant="caption"
+                color="text"
+                fontWeight="medium"
+              >
+                000
               </MDTypography>
             ),
             action: (
