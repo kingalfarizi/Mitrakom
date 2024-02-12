@@ -233,3 +233,19 @@ export const getOrderById = (orderId) => {
       });
   });
 };
+
+export const updateOrderStatus = (orderId, newStatus) => {
+  return new Promise((resolve, reject) => {
+    const query = `UPDATE orders SET statusOrder = ? WHERE id = ?`;
+
+    sql
+      .execute(query, [newStatus, orderId])
+      .then((result) => {
+        resolve(result[0]); // Assuming result is an array of orders
+      })
+      .catch((error) => {
+        console.error("Error updating order status:", error);
+        reject(error);
+      });
+  });
+};

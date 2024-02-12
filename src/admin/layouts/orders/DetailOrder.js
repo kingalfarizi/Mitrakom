@@ -23,6 +23,7 @@ import {
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import rupiah from "helpers/rupiah";
 
 const fetchdata = async (id) => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/orders/${id}`);
@@ -31,13 +32,16 @@ const fetchdata = async (id) => {
 };
 
 const updatePost = async (data, id) => {
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`, {
-    method: "PUT",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await fetch(
+    `${process.env.REACT_APP_API_URL}/orders/${id}`,
+    {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
@@ -171,7 +175,7 @@ function DetailOrder() {
                     variant="outlined"
                     margin="normal"
                     fullWidth
-                    name="judul"
+                    name="ItemName"
                     value={order.ItemName}
                     // onChange={handleOnChange}
                   />
@@ -182,8 +186,19 @@ function DetailOrder() {
                     variant="outlined"
                     margin="normal"
                     fullWidth
-                    name="judul"
+                    name="fullname"
                     value={order.fullname}
+                    // onChange={handleOnChange}
+                  />
+
+                  <label htmlFor="barang">Alamat Pemesan</label>
+                  <TextField
+                    id="alamat"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="userAddress"
+                    value={order.userAddress}
                     // onChange={handleOnChange}
                   />
 
@@ -193,7 +208,7 @@ function DetailOrder() {
                     variant="outlined"
                     margin="normal"
                     fullWidth
-                    name="penulis"
+                    name="kuantitas"
                     value={order.kuantitas}
                     // onChange={handleOnChange}
                   />
@@ -204,8 +219,20 @@ function DetailOrder() {
                     variant="outlined"
                     margin="normal"
                     fullWidth
-                    name="penulis"
+                    name="metodePengiriman"
                     value={order.metodePengiriman}
+                    // onChange={handleOnChange}
+                  />
+
+                  <label htmlFor="barang">Promo Code</label>
+                  <TextField
+                    id="penulis"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="promoCode"
+                    value={order.promoCode || "tidak ada"}
+                    disabled
                     // onChange={handleOnChange}
                   />
 
@@ -227,7 +254,7 @@ function DetailOrder() {
                     margin="normal"
                     fullWidth
                     name="penulis"
-                    value={order.subTotal}
+                    value={rupiah(order.subTotal)}
                     // onChange={handleOnChange}
                   />
 
@@ -256,7 +283,7 @@ function DetailOrder() {
                       // style={{ marginBottom: 20, padding: 10 }}
                     >
                       <MenuItem value={"pending"}>Pending</MenuItem>
-                      <MenuItem value={"delivery"}>Dikirim</MenuItem>
+                      <MenuItem value={"delivered"}>Dikirim</MenuItem>
                       <MenuItem value={"finish"}>Selesai</MenuItem>
                       <MenuItem value={"canceled"}>Dibatalkan</MenuItem>
                     </Select>
