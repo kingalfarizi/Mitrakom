@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -11,12 +12,20 @@ import DashboardLayout from "admin/examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "admin/examples/Navbars/DashboardNavbar";
 import Footer from "admin/examples/Footer";
 import { useEffect, useState } from "react";
-import { Button, CircularProgress, TextField } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 const fetchdata = async (id) => {
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`);
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/orders/${id}`);
   const data = await response.json();
   return data;
 };
@@ -47,25 +56,32 @@ function DetailOrder() {
     refetchIntervalInBackground: 1000,
   });
 
-
-  const [post, setPost] = useState({
-    id: "",
-    judul: "",
-    penulis: "",
-    body: "",
-    image: "",
+  const [order, setOrder] = useState({
+    fullname: "",
+    userAddress: "",
+    metodePengiriman: "",
+    metodePembayaran: "",
+    idCard: null,
+    promoCode: null,
+    subTotal: "",
+    statusOrder: "",
+    idBarang: "",
+    kuantitas: 1,
+    ItemName: "",
+    ItemImg: "",
+    totalHarga: "",
   });
 
   useEffect(() => {
     if (!isLoading) {
-      setPost(data.data);
+      setOrder(data.data);
     }
   }, [data, isLoading]);
 
   // console.log(process.env.REACT_APP_TINYMCE);
 
   const handleOnChange = (e) => {
-    setPost({ ...post, [e.target.name]: e.target.value });
+    setOrder({ ...order, [e.target.name]: e.target.value });
   };
 
   const handleImgUpload = (e) => {
@@ -81,28 +97,30 @@ function DetailOrder() {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       const newImages = reader.result;
-      setPost({ ...post, image: newImages });
+      setOrder({ ...order, image: newImages });
       //   console.log({ newImages });
     };
   };
 
   const { mutate, isPending } = useMutation({
     mutationKey: "updatePost",
-    mutationFn: () => updatePost(post, id),
+    mutationFn: () => updatePost(order, id),
   });
 
   const handleSubmit = async () => {
     // console.log(barang);
-    mutate(post, {
+    mutate(order, {
       onSuccess: async () => {
         alert("Data berhasil diubah");
-        navigate("/admin/post");
+        navigate("/admin/order");
       },
       onError: (error) => {
         alert("terdapat error: " + error);
       },
     });
   };
+
+  console.log(data);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -131,12 +149,12 @@ function DetailOrder() {
                 <MDBox pt={3} style={{ padding: 15 }}>
                   <label htmlFor="barang">Image</label>
                   <img
-                    src={post.image}
+                    src={order.ItemImg}
                     id="preview-img"
                     alt="preview"
                     style={{ width: "15rem" }}
                   />
-                  <TextField
+                  {/* <TextField
                     required
                     id="barang"
                     variant="outlined"
@@ -144,9 +162,9 @@ function DetailOrder() {
                     fullWidth
                     type="file"
                     onChange={handleImgUpload}
-                  />
+                  /> */}
 
-                  <label htmlFor="barang">Judul Post</label>
+                  <label htmlFor="barang">Nama Barang</label>
 
                   <TextField
                     id="judul"
@@ -154,20 +172,95 @@ function DetailOrder() {
                     margin="normal"
                     fullWidth
                     name="judul"
-                    value={post.judul}
-                    onChange={handleOnChange}
+                    value={order.ItemName}
+                    // onChange={handleOnChange}
                   />
-                  <label htmlFor="barang">Penulis Post</label>
 
+                  <label htmlFor="barang">Nama Pemesan</label>
+                  <TextField
+                    id="judul"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="judul"
+                    value={order.fullname}
+                    // onChange={handleOnChange}
+                  />
+
+                  <label htmlFor="barang">Jumlah Barang</label>
                   <TextField
                     id="penulis"
                     variant="outlined"
                     margin="normal"
                     fullWidth
                     name="penulis"
-                    value={post.penulis}
-                    onChange={handleOnChange}
+                    value={order.kuantitas}
+                    // onChange={handleOnChange}
                   />
+
+                  <label htmlFor="barang">Metode Pengiriman</label>
+                  <TextField
+                    id="penulis"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="penulis"
+                    value={order.metodePengiriman}
+                    // onChange={handleOnChange}
+                  />
+
+                  <label htmlFor="barang">Metode Pembayaran</label>
+                  <TextField
+                    id="penulis"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="penulis"
+                    value={order.metodePembayaran}
+                    // onChange={handleOnChange}
+                  />
+                  {/* subtotal */}
+                  <label htmlFor="barang">Subtotal</label>
+                  <TextField
+                    id="penulis"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="penulis"
+                    value={order.subTotal}
+                    // onChange={handleOnChange}
+                  />
+
+                  {/* <label htmlFor="statusOrder">Status Order</label> */}
+
+                  <FormControl
+                    fullWidth
+                    sx={{
+                      mt: 3,
+                    }}
+                  >
+                    {/* <label htmlFor="barang">Status Order</label> */}
+
+                    <InputLabel id="statusOrder">Status Order</InputLabel>
+                    <Select
+                      labelId="statusOrder"
+                      id="statusOrder"
+                      value={order.statusOrder}
+                      label="status order"
+                      name="statusOrder"
+                      onChange={handleOnChange}
+                      sx={{
+                        p: 2,
+                        mb: 3,
+                      }}
+                      // style={{ marginBottom: 20, padding: 10 }}
+                    >
+                      <MenuItem value={"pending"}>Pending</MenuItem>
+                      <MenuItem value={"delivery"}>Dikirim</MenuItem>
+                      <MenuItem value={"finish"}>Selesai</MenuItem>
+                      <MenuItem value={"canceled"}>Dibatalkan</MenuItem>
+                    </Select>
+                  </FormControl>
 
                   <Button
                     variant="contained"

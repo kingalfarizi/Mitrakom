@@ -180,7 +180,7 @@ export default function PostData() {
               <MDButton
                 variant="outlined"
                 color="info"
-                href={`/admin/order/000`}
+                href={`/admin/order/${item.id}`}
               >
                 <MDTypography
                   component="a"
