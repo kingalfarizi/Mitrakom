@@ -112,7 +112,7 @@ export default function PostData() {
       { Header: "Pembeli", accessor: "pembeli", align: "center" },
       { Header: "Kuantitas", accessor: "jumlah", align: "center" },
       { Header: "Metode Pengiriman", accessor: "metode", align: "center" },
-      { Header: "Status", accessor: "status", align: "center" },
+      // { Header: "Status", accessor: "status", align: "center" },
       { Header: "Total Harga", accessor: "harga", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
@@ -154,17 +154,17 @@ export default function PostData() {
                 {item.metodePengiriman}
               </MDTypography>
             ),
-            status: (
-              <MDTypography
-                component="a"
-                href="#"
-                variant="caption"
-                color="text"
-                fontWeight="medium"
-              >
-                {item.statusOrder}
-              </MDTypography>
-            ),
+            // status: (
+            //   <MDTypography
+            //     component="a"
+            //     href="#"
+            //     variant="caption"
+            //     color="text"
+            //     fontWeight="medium"
+            //   >
+            //     {item.statusOrder}
+            //   </MDTypography>
+            // ),
             harga: (
               <MDTypography
                 component="a"
