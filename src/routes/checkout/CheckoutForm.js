@@ -3,7 +3,12 @@ import { useState, useEffect } from "react";
 import { FaShippingFast } from "react-icons/fa";
 import { RiShoppingBagLine } from "react-icons/ri";
 import ResetLocation from "../../helpers/ResetLocation";
-import { Link, useNavigate, useSearchParams, useLocation } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useSearchParams,
+  useLocation,
+} from "react-router-dom";
 import Tick from "../../assets/images/success-tick.png";
 import useSnap from "../payment/useSnap";
 
@@ -82,16 +87,20 @@ const CheckoutForm = ({
           snapEmbed(data.data.token, "snap-container", {
             onSuccess: function (result) {
               console.log("success", result);
-              navigate("/checkout");
+              navigate("/menu");
+              window.location.href = "/menu";
               // setSnapShow(false);
             },
             onPending: function (result) {
               console.log("pending", result);
-              navigate("/checkout");
+              navigate("/menu");
+              window.location.href = "/menu";
               // setSnapShow(false);
             },
             onClose: function () {
-              navigate("/checkout");
+              navigate("/menu");
+              window.location.href = "/menu";
+
               // setSnapShow(false);
             },
           });

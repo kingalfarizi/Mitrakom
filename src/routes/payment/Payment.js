@@ -59,16 +59,16 @@ const Payment = ({ cartItems, totalPayment }) => {
           snapEmbed(data.data.token, "snap-container", {
             onSuccess: function (result) {
               console.log("success", result);
-              navigate("/payment");
+              navigate("/menu");
               setSnapShow(false);
             },
             onPending: function (result) {
               console.log("pending", result);
-              navigate("/payment");
+              navigate("/menu");
               setSnapShow(false);
             },
             onClose: function () {
-              navigate("/payment");
+              navigate("/menu");
               setSnapShow(false);
             },
           });
