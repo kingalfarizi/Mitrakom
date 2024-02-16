@@ -29,6 +29,13 @@ import ResetLocation from "./helpers/ResetLocation.js";
 import { MaterialUIControllerProvider } from "./admin/context";
 import AppAdmin from "./admin/App.js";
 import Dashboard from "admin/layouts/dashboard";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchBarang = async () => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/products`);
+  const data = await response.json();
+  return data;
+};
 
 function App() {
   const [allCategories, setAllCategories] = useState([]);
@@ -43,6 +50,14 @@ function App() {
   const [isModalActive, setIsModalActive] = useState(false);
   const [loginModalWindow, setLoginModalWindow] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+
+  const { isLoading, isError, data } = useQuery({
+    queryKey: ["products"],
+    queryFn: fetchBarang,
+    refetchIntervalInBackground: 1000,
+  });
+
+  const [allProductsData, setAllProductsData] = useState([]);
 
   const getUser = async (id) => {
     try {
@@ -95,6 +110,18 @@ function App() {
       setCurrentUser(user);
     }
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      // console.log(data.data);
+      const updatedAllProducts = data.data.map((product) => ({
+        ...product,
+        attributes: [], // Jika 'attributes' null, ganti dengan array kosong
+      }));
+      setAllProductsData(updatedAllProducts);
+      setAllProducts(updatedAllProducts);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (validLogin && sessionStorage.getItem("validLogin") === null) {

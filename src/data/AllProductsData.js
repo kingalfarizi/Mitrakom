@@ -21,6 +21,14 @@ import PrinterEpson from '../assets/images/lainnya-images/1.jpg'
 import KabelPower from '../assets/images/lainnya-images/2.jpeg'
 import RouterTPLink from '../assets/images/lainnya-images/3.jpg'
 
+const fetchBarang = async () => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/products`);
+  const data = await response.json();
+  return data;
+};
+
+
+
 export const allProductsData = [
   
   //1
