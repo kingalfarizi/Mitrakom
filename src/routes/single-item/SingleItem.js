@@ -4,6 +4,7 @@ import Attribute from "../menu/Attribute";
 import { allProductsData } from "../../data/AllProductsData.js";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import rupiah from "helpers/rupiah";
 
 const fetchBarang = async () => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/products`);
@@ -105,8 +106,8 @@ const SingleItem = ({ handleAddProduct, handleRemoveProduct }) => {
               </section>
             ) : (
               <p className="price-num">
-                <span>$</span>
-                {singleProduct.ItemPrice}
+                {/* <span>$</span> */}
+                {rupiah(singleProduct.ItemPrice)}
               </p>
             )}
             <AddToCartButton

@@ -1,12 +1,15 @@
 import React from "react";
 //components
 import ChangeItemQuantity from "./ChangeItemQuantity";
+import rupiah from "helpers/rupiah";
 
 const CartItem = ({
   handleAddProduct,
   handleRemoveProduct,
   clearCart,
-  cartItems, cartTotals }) => {
+  cartItems,
+  cartTotals,
+}) => {
   return (
     <React.Fragment>
       {cartItems.map((cartItem, index) => {
@@ -25,7 +28,9 @@ const CartItem = ({
                     })}
                   </h3>
                 )}
-                <p className="cart-item-ingredients">{cartItem.ItemIngredients}</p>
+                <p className="cart-item-ingredients">
+                  {cartItem.ItemIngredients}
+                </p>
               </section>
 
               <section className="cart-item-interaction">
@@ -35,21 +40,18 @@ const CartItem = ({
                   cartItem={cartItem}
                 />
 
-                <p className="cart-item-price">${cartItem.ItemPrice}</p>
+                <p className="cart-item-price">{rupiah(cartItem.ItemPrice)}</p>
               </section>
             </section>
           </section>
         );
-      })
-      }
+      })}
       <button onClick={clearCart} className="cart-clear-btn">
         Hapus semua barang di keranjang
       </button>
       {cartTotals}
     </React.Fragment>
   );
-}
-
-
+};
 
 export default CartItem;

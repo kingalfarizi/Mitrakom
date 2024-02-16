@@ -34,22 +34,88 @@ import reportsLineChartData from "admin/layouts/dashboard/data/reportsLineChartD
 // Dashboard components
 import Projects from "admin/layouts/dashboard/components/Projects";
 import OrdersOverview from "admin/layouts/dashboard/components/OrdersOverview";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchBlog = async () => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/posts`);
+  const data = await response.json();
+  return data;
+};
+
+const fetchOrder = async () => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/orders`);
+  const data = await response.json();
+  return data;
+};
+
+const fetchProduct = async () => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/products`);
+  const data = await response.json();
+  return data;
+};
+
+const fetchUser = async () => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/users`);
+  const data = await response.json();
+  return data;
+};
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
 
+  const {
+    isLoading: isLoadingBlog,
+    // isError,
+    data: dataBlog,
+  } = useQuery({
+    queryKey: ["blog"],
+    queryFn: fetchBlog,
+    refetchIntervalInBackground: 1000,
+  });
+
+  const {
+    isLoading: isLoadingOrder,
+    // isError,
+    data: dataOrder,
+  } = useQuery({
+    queryKey: ["order"],
+    queryFn: fetchOrder,
+    refetchIntervalInBackground: 1000,
+  });
+
+  const {
+    isLoading: isLoadingProduct,
+    // isError,
+    data: dataProduct,
+  } = useQuery({
+    queryKey: ["product"],
+    queryFn: fetchProduct,
+    refetchIntervalInBackground: 1000,
+  });
+
+  const {
+    isLoading: isLoadingUser,
+    // isError,
+    data: dataUser,
+  } = useQuery({
+    queryKey: ["user"],
+    queryFn: fetchUser,
+    refetchIntervalInBackground: 1000,
+  });
+
+  // console.log(dataUser)
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} minHeight={"70vh"}>
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="dark"
-                icon="weekend"
-                title="Bookings"
-                count={281}
+                icon="paid"
+                title="Jumlah Orders"
+                count={dataOrder ? dataOrder.data.length : 0}
                 percentage={{
                   color: "success",
                   amount: "+55%",
@@ -61,9 +127,9 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Today's Users"
-                count="2,300"
+                icon="people"
+                title="Jumlah User"
+                count={dataUser ? dataUser.data.length - 1 : 0}
                 percentage={{
                   color: "success",
                   amount: "+3%",
@@ -76,9 +142,9 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="success"
-                icon="store"
-                title="Revenue"
-                count="34k"
+                icon="description"
+                title="Jumlah Blog"
+                count={dataBlog ? dataBlog.data.length : 0}
                 percentage={{
                   color: "success",
                   amount: "+1%",
@@ -91,9 +157,9 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="primary"
-                icon="person_add"
-                title="Followers"
-                count="+91"
+                icon="inventory"
+                title="Jumlah Produk"
+                count={dataProduct ? dataProduct.data.length : 0}
                 percentage={{
                   color: "success",
                   amount: "",
@@ -103,14 +169,14 @@ function Dashboard() {
             </MDBox>
           </Grid>
         </Grid>
-        <MDBox mt={4.5}>
+        {/* <MDBox mt={4.5}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="info"
-                  title="website views"
-                  description="Last Campaign Performance"
+                  title="Jumlah User"
+                  description="Jumlah User Seminggu terakhir"
                   date="campaign sent 2 days ago"
                   chart={reportsBarChartData}
                 />
@@ -143,7 +209,7 @@ function Dashboard() {
               </MDBox>
             </Grid>
           </Grid>
-        </MDBox>
+        </MDBox> */}
         {/* <MDBox>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={8}>

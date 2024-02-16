@@ -1,4 +1,13 @@
-import { Button, Card, Grid, TextField } from "@mui/material";
+import {
+  Button,
+  Card,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import MDBox from "admin/components/MDBox";
 import MDTypography from "admin/components/MDTypography";
 import Footer from "admin/examples/Footer";
@@ -152,7 +161,7 @@ const TambahBarang = () => {
                   />
 
                   <label htmlFor="barang">Kategori Barang</label>
-                  <TextField
+                  {/* <TextField
                     id="barang"
                     variant="outlined"
                     margin="normal"
@@ -160,7 +169,30 @@ const TambahBarang = () => {
                     name="kategori"
                     onChange={handleOnChange}
                     value={barang.kategori}
-                  />
+                  /> */}
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">
+                      Kategori
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={barang.kategori}
+                      label="kategori"
+                      name="kategori"
+                      onChange={handleOnChange}
+                      sx={{
+                        paddingBlock: 1,
+                        marginBlock: 1,
+                      }}
+                    >
+                      <MenuItem value={"Komputer & Laptop"}>
+                        Komputer & Laptop
+                      </MenuItem>
+                      <MenuItem value={"Smartphone"}>Smartphone</MenuItem>
+                      <MenuItem value={"Lainnya"}>Lainnya</MenuItem>
+                    </Select>
+                  </FormControl>
 
                   <Button
                     variant="contained"
