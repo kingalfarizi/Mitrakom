@@ -37,16 +37,17 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React layouts
 import Dashboard from "admin/layouts/dashboard";
-import Tables from "admin/layouts/tables";
-import Billing from "admin/layouts/billing";
+// import Tables from "admin/layouts/tables";
+// import Billing from "admin/layouts/billing";
 // import RTL from "admin/layouts/rtl";
-import Notifications from "admin/layouts/notifications";
+// import Notifications from "admin/layouts/notifications";
 import Profile from "admin/layouts/profile";
-import SignIn from "admin/layouts/authentication/sign-in";
-import SignUp from "admin/layouts/authentication/sign-up";
+// import SignIn from "admin/layouts/authentication/sign-in";
+// import SignUp from "admin/layouts/authentication/sign-up";
 import Barang from "admin/layouts/barang"
 import Post from 'admin/layouts/posts'
 import Order from 'admin/layouts/orders'
+import User from 'admin/layouts/user'
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -84,6 +85,14 @@ const routes = [
     route: "/admin/order",
     component: <Order />,
   },
+  {
+    type: 'collapse',
+    name: "User",
+    key: "user",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/admin/user",
+    component: <User />,
+  }
   // {
   //   type: "collapse",
   //   name: "Tables",
